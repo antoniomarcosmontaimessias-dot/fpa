@@ -1,716 +1,827 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SGTC - Sistema de Gerenciamento de Transferências e Convênios</title>
-    <!-- Tailwind CSS via CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Font Awesome para Ícones -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <!-- Google Fonts: Inter -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f1f5f9;
-        }
-        .card-hover {
-            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .card-hover:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 20px -5px rgba(15, 23, 42, 0.12);
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Formulários de Parcerias e Ajustes - FPA</title>
+  <style>
+    :root {
+      --bg: #f4f6f9;
+      --surface: #ffffff;
+      --text: #1e293b;
+      --muted: #475569;
+      --border: #cbd5e1;
+      --primary: #0f4c81;
+      --primary-dark: #093358;
+      --accent: #0d9488;
+      --warn-bg: #fffbeb;
+      --warn-border: #f59e0b;
+      --warn-text: #78350f;
+      --badge-osc-bg: #e0f2fe;
+      --badge-osc-text: #0369a1;
+      --badge-mun-bg: #f0fdfa;
+      --badge-mun-text: #0f766e;
+      --radius: 10px;
+      --shadow: 0 4px 14px rgba(15, 23, 42, 0.06);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* Cabeçalho Institucional */
+    header.hero {
+      background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+      color: #ffffff;
+      padding: 36px 0 32px;
+      border-bottom: 4px solid var(--accent);
+    }
+
+    .hero-kicker {
+      display: inline-block;
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      background: rgba(255, 255, 255, 0.14);
+      padding: 4px 10px;
+      border-radius: 999px;
+      margin-bottom: 12px;
+    }
+
+    header.hero h1 {
+      margin: 0 0 8px;
+      font-size: clamp(1.45rem, 2.8vw, 2.1rem);
+      line-height: 1.2;
+      font-weight: 700;
+    }
+
+    header.hero p.subtitle {
+      margin: 0;
+      max-width: 780px;
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 1rem;
+    }
+
+    main {
+      padding: 28px 0 44px;
+    }
+
+    /* Barra de Filtro */
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .toolbar-title {
+      margin: 0;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .filtros {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .filtro-btn {
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--muted);
+      padding: 7px 14px;
+      border-radius: 999px;
+      font-size: 0.86rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .filtro-btn:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .filtro-btn.ativo {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #ffffff;
+    }
+
+    /* Grid dos 4 Cards */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 20px;
+    }
+
+    @media (max-width: 760px) {
+      .cards-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 22px;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+      border-color: #94a3b8;
+      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.09);
+    }
+
+    .card.oculto {
+      display: none;
+    }
+
+    .card-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .badge {
+      display: inline-block;
+      font-size: 0.76rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 999px;
+    }
+
+    .badge-osc {
+      background: var(--badge-osc-bg);
+      color: var(--badge-osc-text);
+    }
+
+    .badge-mun {
+      background: var(--badge-mun-bg);
+      color: var(--badge-mun-text);
+    }
+
+    .etapa-num {
+      font-size: 0.78rem;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .card h2 {
+      margin: 0 0 8px;
+      font-size: 1.2rem;
+      color: var(--primary-dark);
+    }
+
+    .card p.descricao {
+      margin: 0 0 16px;
+      color: var(--muted);
+      font-size: 0.94rem;
+    }
+
+    .meta {
+      list-style: none;
+      margin: 0 0 20px;
+      padding: 12px 14px;
+      background: #f8fafc;
+      border-radius: 8px;
+      border: 1px solid #e2e8f0;
+      font-size: 0.85rem;
+      color: var(--text);
+    }
+
+    .meta li + li {
+      margin-top: 6px;
+    }
+
+    .btn-abrir {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      background: var(--primary);
+      color: #ffffff;
+      font-weight: 600;
+      font-size: 0.92rem;
+      padding: 10px 16px;
+      border-radius: 8px;
+      transition: background-color 0.15s ease;
+      width: 100%;
+    }
+
+    .btn-abrir:hover {
+      background: var(--primary-dark);
+    }
+
+    /* Guia Rápido Expansível */
+    .guia-rapido {
+      margin-top: 28px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-left: 5px solid var(--accent);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .guia-rapido summary {
+      list-style: none;
+      cursor: pointer;
+      padding: 18px 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      user-select: none;
+      background: #ffffff;
+      transition: background-color 0.15s ease;
+    }
+
+    .guia-rapido summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .guia-rapido summary:hover {
+      background: #f8fafc;
+    }
+
+    .guia-summary-text strong {
+      display: block;
+      font-size: 1.06rem;
+      color: var(--primary-dark);
+    }
+
+    .guia-summary-text span {
+      font-size: 0.88rem;
+      color: var(--muted);
+    }
+
+    .guia-toggle-pill {
+      flex-shrink: 0;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--primary);
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      padding: 6px 12px;
+      border-radius: 999px;
+    }
+
+    .guia-rapido[open] .guia-toggle-pill::after {
+      content: " ▲";
+    }
+
+    .guia-rapido:not([open]) .guia-toggle-pill::after {
+      content: " ▼";
+    }
+
+    .guia-conteudo {
+      padding: 0 22px 24px;
+      border-top: 1px solid #e2e8f0;
+      font-size: 0.93rem;
+      color: var(--text);
+    }
+
+    .guia-intro {
+      margin: 16px 0 20px;
+      color: var(--muted);
+    }
+
+    .guia-etapa {
+      margin-top: 22px;
+      padding-top: 18px;
+      border-top: 1px solid #e2e8f0;
+    }
+
+    .guia-etapa:first-of-type {
+      margin-top: 0;
+      padding-top: 0;
+      border-top: none;
+    }
+
+    .guia-etapa h3 {
+      margin: 0 0 10px;
+      font-size: 1.03rem;
+      color: var(--primary-dark);
+    }
+
+    .guia-etapa h4 {
+      margin: 14px 0 8px;
+      font-size: 0.95rem;
+      color: var(--primary);
+    }
+
+    .guia-etapa ul,
+    .guia-etapa ol {
+      margin: 8px 0 12px;
+      padding-left: 20px;
+    }
+
+    .guia-etapa li + li {
+      margin-top: 6px;
+    }
+
+    .guia-etapa a {
+      color: var(--primary);
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .guia-etapa a:hover {
+      text-decoration: underline;
+    }
+
+    .exemplos-arquivos,
+    .lista-nomenclatura {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 10px 14px;
+      margin: 8px 0 12px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 0.84rem;
+      color: #0f172a;
+      overflow-x: auto;
+    }
+
+    .exemplos-arquivos div + div,
+    .lista-nomenclatura div + div {
+      margin-top: 4px;
+    }
+
+    .alerta-json {
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      border-left: 4px solid #dc2626;
+      color: #7f1d1d;
+      padding: 10px 14px;
+      border-radius: 8px;
+      margin: 10px 0 12px;
+      font-size: 0.9rem;
+    }
+
+    /* Blocos de Termos SEI */
+    .termo-box {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin: 12px 0 16px;
+      overflow: hidden;
+    }
+
+    .termo-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 10px 14px;
+      background: #e2e8f0;
+      font-size: 0.84rem;
+      font-weight: 700;
+      color: var(--primary-dark);
+    }
+
+    .btn-copiar {
+      border: 1px solid var(--primary);
+      background: #ffffff;
+      color: var(--primary);
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .btn-copiar:hover {
+      background: var(--primary);
+      color: #ffffff;
+    }
+
+    .termo-texto {
+      margin: 0;
+      padding: 14px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 0.82rem;
+      line-height: 1.5;
+      white-space: pre-wrap;
+      word-break: break-word;
+      color: #1e293b;
+    }
+
+    /* Seção Final de Orientação e Atenção */
+    .orientacoes-finais {
+      margin-top: 24px;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 20px;
+    }
+
+    @media (max-width: 760px) {
+      .orientacoes-finais {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .bloco-orientacao {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-left: 5px solid var(--primary);
+      border-radius: var(--radius);
+      padding: 18px 20px;
+      box-shadow: var(--shadow);
+      font-size: 0.92rem;
+    }
+
+    .bloco-orientacao h2 {
+      margin: 0 0 10px;
+      font-size: 1rem;
+      color: var(--primary-dark);
+    }
+
+    .bloco-orientacao ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .bloco-orientacao ul li + li {
+      margin-top: 6px;
+    }
+
+    .bloco-orientacao a {
+      color: var(--primary);
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .bloco-orientacao a:hover {
+      text-decoration: underline;
+    }
+
+    .aviso-transitorio {
+      background-color: var(--warn-bg);
+      border: 1px solid #fde68a;
+      border-left: 5px solid var(--warn-border);
+      color: var(--warn-text);
+      border-radius: var(--radius);
+      padding: 18px 20px;
+      box-shadow: var(--shadow);
+      font-size: 0.92rem;
+    }
+
+    .aviso-transitorio strong {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 1rem;
+    }
+
+    .aviso-transitorio p {
+      margin: 0;
+    }
+
+    .aviso-transitorio p + p {
+      margin-top: 8px;
+    }
+
+    /* Rodapé */
+    footer {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      padding: 20px 0;
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+
+    .footer-inner {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 12px;
+    }
+  </style>
 </head>
-<body class="text-slate-800 flex flex-col min-h-screen">
-
-    <!-- Cabeçalho Institucional -->
-    <header class="bg-gradient-to-r from-slate-900 via-blue-950 to-slate-900 text-white shadow-lg border-b border-blue-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
-                <div class="flex items-center gap-4">
-                    <div class="bg-blue-600/20 border border-blue-400/30 p-3 rounded-xl">
-                        <i class="fa-solid fa-landmark text-2xl text-blue-400"></i>
-                    </div>
-                    <div>
-                        <div class="flex items-center gap-2">
-                            <span class="bg-blue-600 text-xs font-bold px-2 py-0.5 rounded uppercase tracking-wider">Portal Integrado</span>
-                            <span class="text-slate-400 text-xs hidden sm:inline">Lei nº 13.019/2014 & Transferências</span>
-                        </div>
-                        <h1 class="text-xl sm:text-2xl font-bold tracking-tight mt-0.5">
-                            SGTC <span class="font-normal text-slate-300 text-base sm:text-lg hidden sm:inline">| Sistema de Gerenciamento de Transferências e Convênios</span>
-                        </h1>
-                        <p class="text-xs text-slate-400 mt-0.5">Assessoria em Gestão de Convênios e Projetos (AGCP)</p>
-                    </div>
-                </div>
-
-                <!-- Ações Rápidas do Portal -->
-                <div class="flex items-center gap-2.5">
-                    <button onclick="exportarBackup()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-xs font-medium px-3 py-2 rounded-lg flex items-center gap-2 transition" title="Salvar cópia dos registros do painel">
-                        <i class="fa-solid fa-download text-blue-400"></i>
-                        <span>Backup JSON</span>
-                    </button>
-                    <label class="bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-xs font-medium px-3 py-2 rounded-lg flex items-center gap-2 transition cursor-pointer" title="Restaurar registros de um arquivo JSON">
-                        <i class="fa-solid fa-upload text-emerald-400"></i>
-                        <span>Importar</span>
-                        <input type="file" id="importFile" accept=".json" class="hidden" onchange="importarBackup(event)">
-                    </label>
-                    <button onclick="abrirModalNovoProcesso()" class="bg-blue-600 hover:bg-blue-500 text-white text-xs sm:text-sm font-semibold px-4 py-2 rounded-lg shadow flex items-center gap-2 transition">
-                        <i class="fa-solid fa-plus"></i>
-                        <span>Novo Registro</span>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </header>
-
-    <!-- Conteúdo Principal -->
-    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
-
-        <!-- Seção 1: Módulos do Ecossistema (Fluxo Operacional) -->
-        <section>
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-4 gap-2">
-                <div>
-                    <h2 class="text-lg font-bold text-slate-800 flex items-center gap-2">
-                        <i class="fa-solid fa-layer-group text-blue-600"></i>
-                        Módulos Operacionais Integrados
-                    </h2>
-                    <p class="text-xs text-slate-500">Acesse cada etapa do fluxo de formalização, análise e gestão das parcerias e convênios.</p>
-                </div>
-                <span class="text-xs font-medium text-slate-500 bg-white px-3 py-1 rounded-full border border-slate-200 self-start sm:self-auto">
-                    <i class="fa-solid fa-circle-check text-emerald-500 mr-1"></i> Ambiente GitHub Pages Ativo
-                </span>
-            </div>
-
-            <!-- Grid de Cards dos Módulos -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
-
-                <!-- Card 1: Estudo Técnico Inicial -->
-                <a href="https://antoniomarcosmontaimessias-dot.github.io/estudo_tecnico_inicial/" target="_blank" rel="noopener noreferrer"
-                   class="card-hover bg-white rounded-xl border border-slate-200 p-5 flex flex-col justify-between group relative overflow-hidden">
-                    <div class="absolute top-0 left-0 w-full h-1 bg-indigo-500"></div>
-                    <div>
-                        <div class="flex items-center justify-between mb-3">
-                            <span class="w-10 h-10 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center text-lg group-hover:bg-indigo-600 group-hover:text-white transition">
-                                <i class="fa-solid fa-compass-drafting"></i>
-                            </span>
-                            <span class="text-[11px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded bg-indigo-50 text-indigo-700">
-                                Etapa 01 • Órgão Gestor
-                            </span>
-                        </div>
-                        <h3 class="font-bold text-slate-800 text-base group-hover:text-indigo-700 transition">
-                            Estudo Técnico Inicial
-                        </h3>
-                        <p class="text-xs text-slate-500 mt-1.5 leading-relaxed">
-                            Planejamento preliminar, justificativa do interesse público e viabilidade de parcerias/ajustes.
-                        </p>
-                    </div>
-                    <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-indigo-600">
-                        <span>Acessar Módulo</span>
-                        <i class="fa-solid fa-arrow-up-right-from-square group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition"></i>
-                    </div>
-                </a>
-
-                <!-- Card 2: Plano de Trabalho -->
-                <a href="https://antoniomarcosmontaimessias-dot.github.io/plano_de_trabalho_osc/" target="_blank" rel="noopener noreferrer"
-                   class="card-hover bg-white rounded-xl border border-slate-200 p-5 flex flex-col justify-between group relative overflow-hidden">
-                    <div class="absolute top-0 left-0 w-full h-1 bg-emerald-500"></div>
-                    <div>
-                        <div class="flex items-center justify-between mb-3">
-                            <span class="w-10 h-10 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center text-lg group-hover:bg-emerald-600 group-hover:text-white transition">
-                                <i class="fa-solid fa-file-signature"></i>
-                            </span>
-                            <span class="text-[11px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded bg-emerald-50 text-emerald-700">
-                                Etapa 02 • OSCs / Entidades
-                            </span>
-                        </div>
-                        <h3 class="font-bold text-slate-800 text-base group-hover:text-emerald-700 transition">
-                            Plano de Trabalho
-                        </h3>
-                        <p class="text-xs text-slate-500 mt-1.5 leading-relaxed">
-                            Formulário eletrônico para elaboração de metas, etapas, cronograma físico e plano de aplicação.
-                        </p>
-                    </div>
-                    <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-emerald-600">
-                        <span>Acessar Módulo</span>
-                        <i class="fa-solid fa-arrow-up-right-from-square group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition"></i>
-                    </div>
-                </a>
-
-                <!-- Card 3: Avaliação do Gestor -->
-                <a href="https://antoniomarcosmontaimessias-dot.github.io/avaliacao_gestor/" target="_blank" rel="noopener noreferrer"
-                   class="card-hover bg-white rounded-xl border border-slate-200 p-5 flex flex-col justify-between group relative overflow-hidden">
-                    <div class="absolute top-0 left-0 w-full h-1 bg-amber-500"></div>
-                    <div>
-                        <div class="flex items-center justify-between mb-3">
-                            <span class="w-10 h-10 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center text-lg group-hover:bg-amber-600 group-hover:text-white transition">
-                                <i class="fa-solid fa-clipboard-check"></i>
-                            </span>
-                            <span class="text-[11px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded bg-amber-50 text-amber-700">
-                                Etapa 03 • Órgão Gestor
-                            </span>
-                        </div>
-                        <h3 class="font-bold text-slate-800 text-base group-hover:text-amber-700 transition">
-                            Avaliação do Gestor
-                        </h3>
-                        <p class="text-xs text-slate-500 mt-1.5 leading-relaxed">
-                            Parecer técnico de mérito, análise da adequação do plano de trabalho e viabilidade operacional.
-                        </p>
-                    </div>
-                    <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-amber-600">
-                        <span>Acessar Módulo</span>
-                        <i class="fa-solid fa-arrow-up-right-from-square group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition"></i>
-                    </div>
-                </a>
-
-                <!-- Card 4: Lista de Verificação (AGCP) -->
-                <a href="https://antoniomarcosmontaimessias-dot.github.io/lista_verificacao/" target="_blank" rel="noopener noreferrer"
-                   class="card-hover bg-white rounded-xl border border-slate-200 p-5 flex flex-col justify-between group relative overflow-hidden">
-                    <div class="absolute top-0 left-0 w-full h-1 bg-purple-500"></div>
-                    <div>
-                        <div class="flex items-center justify-between mb-3">
-                            <span class="w-10 h-10 rounded-lg bg-purple-50 text-purple-600 flex items-center justify-center text-lg group-hover:bg-purple-600 group-hover:text-white transition">
-                                <i class="fa-solid fa-list-check"></i>
-                            </span>
-                            <span class="text-[11px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded bg-purple-50 text-purple-700">
-                                Etapa 04 • AGCP
-                            </span>
-                        </div>
-                        <h3 class="font-bold text-slate-800 text-base group-hover:text-purple-700 transition">
-                            Lista de Verificação
-                        </h3>
-                        <p class="text-xs text-slate-500 mt-1.5 leading-relaxed">
-                            Checklist de conformidade documental, regularidade fiscal e instrução processual MROSC.
-                        </p>
-                    </div>
-                    <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-purple-600">
-                        <span>Acessar Módulo</span>
-                        <i class="fa-solid fa-arrow-up-right-from-square group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition"></i>
-                    </div>
-                </a>
-
-                <!-- Card 5: Módulo SGTC Completo / Execução -->
-                <a href="#painel-controle" onclick="document.getElementById('painel-controle').scrollIntoView({behavior: 'smooth'});"
-                   class="card-hover bg-gradient-to-br from-blue-900 to-slate-900 text-white rounded-xl border border-blue-700 p-5 flex flex-col justify-between group relative overflow-hidden">
-                    <div class="absolute top-0 left-0 w-full h-1 bg-sky-400"></div>
-                    <div>
-                        <div class="flex items-center justify-between mb-3">
-                            <span class="w-10 h-10 rounded-lg bg-blue-500/20 text-sky-300 border border-sky-400/30 flex items-center justify-center text-lg group-hover:bg-sky-400 group-hover:text-slate-900 transition">
-                                <i class="fa-solid fa-chart-pie"></i>
-                            </span>
-                            <span class="text-[11px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded bg-sky-500/20 text-sky-300 border border-sky-400/20">
-                                Etapa 05 • Gestão Global
-                            </span>
-                        </div>
-                        <h3 class="font-bold text-white text-base">
-                            Controle SGTC
-                        </h3>
-                        <p class="text-xs text-slate-300 mt-1.5 leading-relaxed">
-                            Instrumentos celebrados, execução direta/parcerias, licitações, pagamentos e prestação de contas.
-                        </p>
-                    </div>
-                    <div class="mt-4 pt-3 border-t border-white/10 flex items-center justify-between text-xs font-semibold text-sky-300">
-                        <span>Gerenciar Abaixo</span>
-                        <i class="fa-solid fa-arrow-down group-hover:translate-y-0.5 transition"></i>
-                    </div>
-                </a>
-
-            </div>
-        </section>
-
-        <!-- Seção 2: Indicadores Resumidos (KPIs) -->
-        <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex items-center gap-4">
-                <div class="w-12 h-12 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center text-xl">
-                    <i class="fa-solid fa-folder-open"></i>
-                </div>
-                <div>
-                    <p class="text-xs font-medium text-slate-500 uppercase">Total de Processos</p>
-                    <p class="text-2xl font-bold text-slate-800" id="kpiTotal">0</p>
-                </div>
-            </div>
-
-            <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex items-center gap-4">
-                <div class="w-12 h-12 rounded-full bg-amber-50 text-amber-600 flex items-center justify-center text-xl">
-                    <i class="fa-solid fa-spinner"></i>
-                </div>
-                <div>
-                    <p class="text-xs font-medium text-slate-500 uppercase">Em Formalização / Análise</p>
-                    <p class="text-2xl font-bold text-slate-800" id="kpiAnalise">0</p>
-                </div>
-            </div>
-
-            <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex items-center gap-4">
-                <div class="w-12 h-12 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center text-xl">
-                    <i class="fa-solid fa-handshake"></i>
-                </div>
-                <div>
-                    <p class="text-xs font-medium text-slate-500 uppercase">Em Execução / Celebrados</p>
-                    <p class="text-2xl font-bold text-slate-800" id="kpiExecucao">0</p>
-                </div>
-            </div>
-
-            <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex items-center gap-4">
-                <div class="w-12 h-12 rounded-full bg-indigo-50 text-indigo-600 flex items-center justify-center text-xl">
-                    <i class="fa-solid fa-sack-dollar"></i>
-                </div>
-                <div>
-                    <p class="text-xs font-medium text-slate-500 uppercase">Volume Global Gerenciado</p>
-                    <p class="text-xl font-bold text-slate-800" id="kpiValor">R$ 0,00</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Seção 3: Tabela de Controle Geral do SGTC -->
-        <section id="painel-controle" class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
-            <!-- Cabeçalho da Tabela e Filtros -->
-            <div class="p-5 border-b border-slate-200 bg-slate-50/60 flex flex-col lg:flex-row lg:items-center justify-between gap-4">
-                <div>
-                    <h2 class="text-lg font-bold text-slate-800 flex items-center gap-2">
-                        <i class="fa-solid fa-table-list text-blue-600"></i>
-                        Controle Geral de Demandas, Parcerias e Convênios
-                    </h2>
-                    <p class="text-xs text-slate-500 mt-0.5">Acompanhamento unificado desde o Estudo Técnico até a Prestação de Contas Final.</p>
-                </div>
-
-                <!-- Barra de Busca e Filtros -->
-                <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5">
-                    <div class="relative">
-                        <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
-                        <input type="text" id="filtroBusca" onkeyup="renderizarTabela()" placeholder="Buscar processo, OSC, objeto..."
-                               class="pl-8 pr-3 py-1.5 text-xs border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 w-full sm:w-56">
-                    </div>
-
-                    <select id="filtroModalidade" onchange="renderizarTabela()"
-                            class="px-3 py-1.5 text-xs border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500">
-                        <option value="">Todas as Modalidades</option>
-                        <option value="Termo de Fomento">Termo de Fomento (MROSC)</option>
-                        <option value="Termo de Colaboração">Termo de Colaboração (MROSC)</option>
-                        <option value="Acordo de Cooperação">Acordo de Cooperação</option>
-                        <option value="Convênio / Repasse">Convênio / Repasse Federal-Estadual</option>
-                        <option value="Execução Direta">Execução Direta</option>
-                    </select>
-
-                    <select id="filtroEtapa" onchange="renderizarTabela()"
-                            class="px-3 py-1.5 text-xs border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500">
-                        <option value="">Todas as Etapas</option>
-                        <option value="1. Estudo Técnico">1. Estudo Técnico</option>
-                        <option value="2. Plano de Trabalho">2. Plano de Trabalho</option>
-                        <option value="3. Avaliação do Gestor">3. Avaliação do Gestor</option>
-                        <option value="4. Checklist AGCP">4. Checklist AGCP</option>
-                        <option value="5. Celebrado / Execução">5. Celebrado / Execução</option>
-                        <option value="6. Prestação de Contas">6. Prestação de Contas</option>
-                    </select>
-                </div>
-            </div>
-
-            <!-- Tabela Responsiva -->
-            <div class="overflow-x-auto">
-                <table class="w-full text-left border-collapse">
-                    <thead>
-                        <tr class="bg-slate-100/80 text-slate-600 text-[11px] uppercase tracking-wider border-b border-slate-200">
-                            <th class="py-3 px-4 font-semibold">Processo / SEI</th>
-                            <th class="py-3 px-4 font-semibold">Entidade / Órgão</th>
-                            <th class="py-3 px-4 font-semibold">Modalidade & Objeto</th>
-                            <th class="py-3 px-4 font-semibold">Valor Global</th>
-                            <th class="py-3 px-4 font-semibold">Etapa Atual</th>
-                            <th class="py-3 px-4 font-semibold text-center">Módulos Rápidos</th>
-                            <th class="py-3 px-4 font-semibold text-right">Ações</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tabelaProcessos" class="divide-y divide-slate-200 text-xs">
-                        <!-- Preenchido via JavaScript -->
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- Rodapé da Tabela -->
-            <div class="px-5 py-3 bg-slate-50 border-t border-slate-200 flex flex-col sm:flex-row justify-between items-center text-xs text-slate-500 gap-2">
-                <span id="contadorRegistros">Mostrando 0 registros</span>
-                <span>Os dados ficam salvos localmente no seu navegador (LocalStorage). Use o botão <strong>Backup JSON</strong> regularmente.</span>
-            </div>
-        </section>
-
-    </main>
-
-    <!-- Rodapé Institucional -->
-    <footer class="bg-white border-t border-slate-200 py-4 mt-8">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center text-xs text-slate-500 gap-2">
-            <p><strong>SGTC</strong> — Sistema de Gerenciamento de Transferências e Convênios</p>
-            <p>Integração Modular • GitHub Pages Ecosystem</p>
-        </div>
-    </footer>
-
-    <!-- Modal para Cadastro / Edição de Processo no Controle Geral -->
-    <div id="modalProcesso" class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs hidden items-center justify-center z-50 p-4">
-        <div class="bg-white rounded-2xl shadow-2xl max-w-2xl w-full overflow-hidden border border-slate-200">
-            <div class="bg-slate-900 text-white px-6 py-4 flex justify-between items-center">
-                <h3 class="font-bold text-base flex items-center gap-2" id="modalTitulo">
-                    <i class="fa-solid fa-folder-plus text-blue-400"></i>
-                    <span>Cadastrar Demanda / Instrumento no SGTC</span>
-                </h3>
-                <button onclick="fecharModal()" class="text-slate-400 hover:text-white transition">
-                    <i class="fa-solid fa-xmark text-lg"></i>
-                </button>
-            </div>
-
-            <form id="formProcesso" onsubmit="salvarProcesso(event)" class="p-6 space-y-4 text-xs">
-                <input type="hidden" id="procId">
-
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                        <label class="block font-semibold text-slate-700 mb-1">Nº Processo / Protocolo SEI *</label>
-                        <input type="text" id="procNumero" required placeholder="Ex: 3535507.405.00001234/2026-10"
-                               class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none">
-                    </div>
-                    <div>
-                        <label class="block font-semibold text-slate-700 mb-1">Modalidade / Instrumento *</label>
-                        <select id="procModalidade" required
-                                class="w-full px-3 py-2 border border-slate-300 rounded-lg bg-white focus:ring-2 focus:ring-blue-500 focus:outline-none">
-                            <option value="Termo de Fomento">Termo de Fomento (MROSC)</option>
-                            <option value="Termo de Colaboração">Termo de Colaboração (MROSC)</option>
-                            <option value="Acordo de Cooperação">Acordo de Cooperação</option>
-                            <option value="Convênio / Repasse">Convênio / Repasse Federal-Estadual</option>
-                            <option value="Execução Direta">Execução Direta</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                        <label class="block font-semibold text-slate-700 mb-1">Entidade (OSC) ou Secretaria Gestora *</label>
-                        <input type="text" id="procEntidade" required placeholder="Ex: Associação Criança Feliz"
-                               class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none">
-                    </div>
-                    <div>
-                        <label class="block font-semibold text-slate-700 mb-1">Órgão Gestor / Pasta Responsável *</label>
-                        <input type="text" id="procOrgao" required placeholder="Ex: Depto. de Assistência Social"
-                               class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none">
-                    </div>
-                </div>
-
-                <div>
-                    <label class="block font-semibold text-slate-700 mb-1">Objeto Resumido *</label>
-                    <input type="text" id="procObjeto" required placeholder="Ex: Atendimento socioassistencial e oficinas culturais para crianças e adolescentes"
-                           class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none">
-                </div>
-
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                    <div>
-                        <label class="block font-semibold text-slate-700 mb-1">Valor Global (R$) *</label>
-                        <input type="number" step="0.01" id="procValor" required placeholder="0.00"
-                               class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none">
-                    </div>
-                    <div>
-                        <label class="block font-semibold text-slate-700 mb-1">Etapa Atual no Fluxo *</label>
-                        <select id="procEtapa" required
-                                class="w-full px-3 py-2 border border-slate-300 rounded-lg bg-white focus:ring-2 focus:ring-blue-500 focus:outline-none">
-                            <option value="1. Estudo Técnico">1. Estudo Técnico</option>
-                            <option value="2. Plano de Trabalho">2. Plano de Trabalho</option>
-                            <option value="3. Avaliação do Gestor">3. Avaliação do Gestor</option>
-                            <option value="4. Checklist AGCP">4. Checklist AGCP</option>
-                            <option value="5. Celebrado / Execução">5. Celebrado / Execução</option>
-                            <option value="6. Prestação de Contas">6. Prestação de Contas</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block font-semibold text-slate-700 mb-1">Fonte de Recurso</label>
-                        <input type="text" id="procFonte" placeholder="Ex: Tesouro / Emenda / Federal"
-                               class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none">
-                    </div>
-                </div>
-
-                <div>
-                    <label class="block font-semibold text-slate-700 mb-1">Observações / Situação de Licitação ou Pagamentos</label>
-                    <textarea id="procObs" rows="2" placeholder="Anotações sobre parcelas liberadas, pendências documentais ou prazos..."
-                              class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"></textarea>
-                </div>
-
-                <div class="pt-3 border-t border-slate-200 flex justify-end gap-2">
-                    <button type="button" onclick="fecharModal()" class="px-4 py-2 rounded-lg border border-slate-300 text-slate-600 hover:bg-slate-100 font-medium">
-                        Cancelar
-                    </button>
-                    <button type="submit" class="px-5 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-semibold shadow">
-                        Salvar Registro
-                    </button>
-                </div>
-            </form>
-        </div>
+<body>
+  <header class="hero">
+    <div class="container">
+      <span class="hero-kicker">Município da Estância Turística de Paraguaçu Paulista</span>
+      <h1>Formulários de Parcerias e Ajustes - FPA</h1>
+      <p class="subtitle">
+        Formulários padronizados para instrução de processos SEI e celebração de parcerias e ajustes
+      </p>
     </div>
+  </header>
 
-    <!-- Scripts de Controle do Painel -->
-    <script>
-        const STORAGE_KEY = 'sgtc_processos_v1';
+  <main>
+    <div class="container">
+      <div class="toolbar">
+        <h2 class="toolbar-title">Formulários Disponíveis</h2>
+        <div class="filtros" role="group" aria-label="Filtrar formulários por público">
+          <button type="button" class="filtro-btn ativo" data-filtro="todos">Todos (4)</button>
+          <button type="button" class="filtro-btn" data-filtro="osc">OSCs / Entidades</button>
+          <button type="button" class="filtro-btn" data-filtro="municipal">Técnicos da Prefeitura</button>
+        </div>
+      </div>
 
-        // Dados iniciais de exemplo para demonstração na primeira abertura
-        const dadosIniciais = [
-            {
-                id: '1',
-                numero: 'SEI 3535507.405.00000102/2026-01',
-                modalidade: 'Termo de Fomento',
-                entidade: 'Associação Criança Feliz',
-                orgao: 'Assistência Social',
-                objeto: 'Serviço de Convivência e Fortalecimento de Vínculos - Exercício 2027',
-                valor: 145000.00,
-                etapa: '4. Checklist AGCP',
-                fonte: 'Tesouro Municipal / FMAS',
-                obs: 'Plano de trabalho aprovado pelo gestor. Aguardando conferência final de certidões.'
-            },
-            {
-                id: '2',
-                numero: 'SEI 3535507.405.00000115/2026-44',
-                modalidade: 'Termo de Colaboração',
-                entidade: 'Santa Casa de Misericórdia',
-                orgao: 'Saúde',
-                objeto: 'Manutenção e ampliação dos atendimentos de média complexidade',
-                valor: 850000.00,
-                etapa: '5. Celebrado / Execução',
-                fonte: 'Recurso Federal / MAC',
-                obs: 'Termo assinado. 1ª parcela liberada; acompanhamento mensal de metas em dia.'
-            },
-            {
-                id: '3',
-                numero: 'SEI 3535507.405.00000129/2026-88',
-                modalidade: 'Convênio / Repasse',
-                entidade: 'Prefeitura Municipal (Execução Direta)',
-                orgao: 'Obras e Infraestrutura',
-                objeto: 'Recapeamento asfáltico e drenagem urbana - Transferegov',
-                valor: 420000.00,
-                etapa: '1. Estudo Técnico',
-                fonte: 'Emenda Parlamentar / Caixa',
-                obs: 'Em fase de elaboração do Estudo Técnico Inicial e projetos básicos.'
-            }
-        ];
+      <section class="cards-grid" aria-label="Lista de ferramentas">
+        <!-- Card 1 -->
+        <article class="card" data-perfil="municipal">
+          <div>
+            <div class="card-top">
+              <span class="badge badge-mun">Técnicos da Prefeitura</span>
+              <span class="etapa-num">Etapa 01</span>
+            </div>
+            <h2>Estudo Técnico Inicial</h2>
+            <p class="descricao">
+              Estrutura o levantamento técnico preliminar, a justificativa da demanda e os parâmetros iniciais para subsidiar a abertura e a análise do processo.
+            </p>
+            <ul class="meta">
+              <li><strong>Finalidade:</strong> Estudo técnico e viabilidade inicial</li>
+              <li><strong>Destino:</strong> Instrução de processo SEI</li>
+            </ul>
+          </div>
+          <a href="https://antoniomarcosmontaimessias-dot.github.io/fpa/estudo_tecnico_inicial.html" class="btn-abrir">Abrir Estudo Técnico Inicial</a>
+        </article>
 
-        // Carregar processos do localStorage
-        function obterProcessos() {
-            const dados = localStorage.getItem(STORAGE_KEY);
-            if (!dados) {
-                localStorage.setItem(STORAGE_KEY, JSON.stringify(dadosIniciais));
-                return dadosIniciais;
-            }
-            return JSON.parse(dados);
-        }
+        <!-- Card 2 -->
+        <article class="card" data-perfil="osc">
+          <div>
+            <div class="card-top">
+              <span class="badge badge-osc">OSCs / Entidades</span>
+              <span class="etapa-num">Etapa 02</span>
+            </div>
+            <h2>Plano de Trabalho OSC</h2>
+            <p class="descricao">
+              Organiza os elementos essenciais da proposta de parceria ou ajuste apresentada pela organização da sociedade civil ou entidade proponente.
+            </p>
+            <ul class="meta">
+              <li><strong>Finalidade:</strong> Formalização de proposta de parceria/ajuste</li>
+              <li><strong>Destino:</strong> Análise técnica e instrução SEI</li>
+            </ul>
+          </div>
+          <a href="https://antoniomarcosmontaimessias-dot.github.io/fpa/plano_de_trabalho_osc.html" class="btn-abrir">Abrir Plano de Trabalho OSC</a>
+        </article>
 
-        function salvarListaProcessos(lista) {
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(lista));
-            renderizarTabela();
-        }
+        <!-- Card 3 -->
+        <article class="card" data-perfil="municipal">
+          <div>
+            <div class="card-top">
+              <span class="badge badge-mun">Técnicos da Prefeitura</span>
+              <span class="etapa-num">Etapa 03</span>
+            </div>
+            <h2>Avaliação do Gestor</h2>
+            <p class="descricao">
+              Registra a manifestação e a avaliação técnica/gerencial sobre a proposta e o plano de trabalho para subsidiar as decisões do processo.
+            </p>
+            <ul class="meta">
+              <li><strong>Finalidade:</strong> Avaliação do plano de trabalho e mérito</li>
+              <li><strong>Destino:</strong> Instrução de processo SEI</li>
+            </ul>
+          </div>
+          <a href="https://antoniomarcosmontaimessias-dot.github.io/fpa/avaliacao_gestor.html" class="btn-abrir">Abrir Avaliação do Gestor</a>
+        </article>
 
-        // Formatar Moeda BRL
-        function formatarMoeda(valor) {
-            return Number(valor).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-        }
+        <!-- Card 4 -->
+        <article class="card" data-perfil="municipal">
+          <div>
+            <div class="card-top">
+              <span class="badge badge-mun">Técnicos da Prefeitura</span>
+              <span class="etapa-num">Etapa 04</span>
+            </div>
+            <h2>Lista de Verificação</h2>
+            <p class="descricao">
+              Confere itens obrigatórios, documentos e requisitos formais necessários para a regular instrução do processo SEI e celebração do ajuste.
+            </p>
+            <ul class="meta">
+              <li><strong>Finalidade:</strong> Conferência documental e conformidade</li>
+              <li><strong>Destino:</strong> Instrução SEI e celebração da parceria</li>
+            </ul>
+          </div>
+          <a href="https://antoniomarcosmontaimessias-dot.github.io/fpa/lista_verificacao.html" class="btn-abrir">Abrir Lista de Verificação</a>
+        </article>
+      </section>
 
-        // Badge colorido conforme a etapa
-        function obterBadgeEtapa(etapa) {
-            const mapaCores = {
-                '1. Estudo Técnico': 'bg-indigo-100 text-indigo-800 border-indigo-200',
-                '2. Plano de Trabalho': 'bg-emerald-100 text-emerald-800 border-emerald-200',
-                '3. Avaliação do Gestor': 'bg-amber-100 text-amber-800 border-amber-200',
-                '4. Checklist AGCP': 'bg-purple-100 text-purple-800 border-purple-200',
-                '5. Celebrado / Execução': 'bg-blue-100 text-blue-800 border-blue-200',
-                '6. Prestação de Contas': 'bg-slate-200 text-slate-800 border-slate-300'
-            };
-            const classe = mapaCores[etapa] || 'bg-slate-100 text-slate-800';
-            return `<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-semibold border ${classe}">${etapa}</span>`;
-        }
+      <!-- Guia Rápido Expansível -->
+      <details class="guia-rapido">
+        <summary>
+          <div class="guia-summary-text">
+            <strong>Guia Rápido: Anexação no SEI e Envio do Arquivo JSON</strong>
+            <span>Passo a passo para geração de arquivos, juntada no SEI-Cidades, termos de ratificação e envio do JSON</span>
+          </div>
+          <span class="guia-toggle-pill">Ver orientações</span>
+        </summary>
 
-        // Renderizar Tabela e Atualizar KPIs
-        function renderizarTabela() {
-            const processos = obterProcessos();
-            const busca = document.getElementById('filtroBusca').value.toLowerCase();
-            const modFiltro = document.getElementById('filtroModalidade').value;
-            const etapaFiltro = document.getElementById('filtroEtapa').value;
+        <div class="guia-conteudo">
+          <p class="guia-intro">
+            Ao concluir o preenchimento de qualquer formulário no ambiente <strong>FPA (Formulários de Parcerias e Ajustes)</strong>, o sistema gera dois tipos de arquivos distintos: os documentos visuais para leitura/assinatura digital (<strong>PDF</strong>) e o arquivo de dados estruturados para reaproveitamento/edição (<strong>JSON</strong>). Siga as etapas abaixo para a correta instrução do processo:
+          </p>
 
-            // Atualizar KPIs globais
-            document.getElementById('kpiTotal').innerText = processos.length;
-            const emAnalise = processos.filter(p => ['1. Estudo Técnico', '2. Plano de Trabalho', '3. Avaliação do Gestor', '4. Checklist AGCP'].includes(p.etapa)).length;
-            const emExecucao = processos.filter(p => p.etapa === '5. Celebrado / Execução').length;
-            const somaValores = processos.reduce((acc, p) => acc + Number(p.valor || 0), 0);
+          <!-- Etapa 1 -->
+          <section class="guia-etapa">
+            <h3>1. Geração e Conferência dos Arquivos</h3>
+            <ol>
+              <li><strong>Conclua o preenchimento</strong> de todos os campos obrigatórios do formulário correspondente (<em>Estudo Técnico Inicial</em>, <em>Plano de Trabalho OSC</em>, <em>Avaliação do Gestor</em> ou <em>Lista de Verificação</em>).</li>
+              <li><strong>Gere o arquivo PDF</strong> (através do botão de impressão/geração de PDF do próprio formulário) e revise se todas as informações, tabelas e valores estão legíveis e sem cortes.</li>
+              <li><strong>Exporte o arquivo JSON</strong> (através do botão de salvar/exportar dados do formulário).</li>
+              <li><strong>Padronize a nomenclatura</strong> dos arquivos antes de salvar no computador para facilitar a identificação no processo, conforme os exemplos:</li>
+            </ol>
+            <div class="exemplos-arquivos">
+              <div>Plano_Trabalho_EME_2-2025_R$ 15.000,00_Ver_L_Silva.pdf</div>
+              <div>Plano_Trabalho_EME_2-2025_R$ 15.000,00_Ver_L_Silva.json</div>
+            </div>
+          </section>
 
-            document.getElementById('kpiAnalise').innerText = emAnalise;
-            document.getElementById('kpiExecucao').innerText = emExecucao;
-            document.getElementById('kpiValor').innerText = formatarMoeda(somaValores);
+          <!-- Etapa 2 -->
+          <section class="guia-etapa">
+            <h3>2. Inserção do Documento Visual no Processo SEI (PDF)</h3>
+            <p>
+              O arquivo <strong>PDF</strong> é o documento oficial que compõe os autos do processo administrativo e receberá assinatura eletrônica ou autenticação.
+            </p>
 
-            // Filtrar
-            const filtrados = processos.filter(p => {
-                const matchBusca = !busca ||
-                    p.numero.toLowerCase().includes(busca) ||
-                    p.entidade.toLowerCase().includes(busca) ||
-                    p.objeto.toLowerCase().includes(busca) ||
-                    p.orgao.toLowerCase().includes(busca);
-                const matchMod = !modFiltro || p.modalidade === modFiltro;
-                const matchEtapa = !etapaFiltro || p.etapa === etapaFiltro;
-                return matchBusca && matchMod && matchEtapa;
-            });
+            <h4>Para OSCs / Entidades Proponentes (Peticionamento):</h4>
+            <ul>
+              <li>Realize o peticionamento no <strong>SEI CIDADES Usuário Externo</strong>.</li>
+              <li>
+                Anexe os arquivos PDF (nato-digital) previamente assinados eletronicamente, conforme o
+                <a href="https://cidades.sei.sp.gov.br/marilia/sei/modulos/pesquisa/md_pesq_documento_consulta_externa.php?iK9Tu8KRgrHQRX3I8EA2Qe4oY0oNrraQ9EfABp4aEj8ve6g0Gdxu0VePHWeZ0jPwPcodFwJ-DKb93vieyuIq5N4EC2SpKSQ73R9Y71E9J-AzbB3m8Lh6sYG06uJBvxkUm5S60i0SwFcMNR_auPEYaA,," target="_blank" rel="noopener noreferrer">GUIA DE ORIENTAÇÕES PARA PROTOCOLO NO SEI CIDADES - USUÁRIO EXTERNO</a>.
+              </li>
+            </ul>
 
-            const tbody = document.getElementById('tabelaProcessos');
-            tbody.innerHTML = '';
+            <h4>Para Técnicos da Prefeitura (Acesso Interno SEI-Cidades):</h4>
+            <ol>
+              <li>Acesse o processo correspondente no <strong>SEI-Cidades</strong>.</li>
+              <li>Clique em <strong>Incluir Documento</strong> e selecione a opção <strong>Externo</strong>.</li>
+              <li>Escolha o <strong>Tipo de Documento</strong> adequado (ex.: <em>Plano</em>, <em>Estudo</em>, <em>Manifestação</em> ou <em>Lista</em>).</li>
+              <li>
+                Complemente o <strong>Nome na Árvore</strong>, preencha a <strong>Data do Documento</strong> e selecione o nível de acesso (<strong>Público</strong> ou <strong>Restrito</strong>, conforme a LGPD):
+                <div class="lista-nomenclatura">
+                  <div>Plano [de Trabalho XX-XX-XXXX]</div>
+                  <div>Estudo [Técnico Inicial XX-XX-XXXX]</div>
+                  <div>Manifestação [Gestor XX-XX-XXXX]</div>
+                  <div>Lista [Verificação XX-XX-XXXX]</div>
+                </div>
+              </li>
+              <li>Em <strong>Formato</strong>, selecione <strong>Nato-digital</strong>, anexe o arquivo <strong>PDF</strong> gerado e clique em <strong>Confirmar Dados</strong>.</li>
+              <li>
+                Após anexar os arquivos PDF, crie em seguida um <strong>documento nativo no editor do SEI</strong> fazendo referência expressa aos números de protocolo (doc SEI) de cada anexo, para validar o documento na árvore do processo:
+              </li>
+            </ol>
 
-            if (filtrados.length === 0) {
-                tbody.innerHTML = `
-                    <tr>
-                        <td colspan="7" class="py-8 text-center text-slate-400">
-                            <i class="fa-solid fa-folder-open text-2xl mb-2 block"></i>
-                            Nenhum processo encontrado com os filtros selecionados.
-                        </td>
-                    </tr>`;
-            } else {
-                filtrados.forEach(p => {
-                    const tr = document.createElement('tr');
-                    tr.className = 'hover:bg-blue-50/40 transition';
-                    tr.innerHTML = `
-                        <td class="py-3.5 px-4 align-top">
-                            <div class="font-bold text-slate-800">${p.numero}</div>
-                            <div class="text-[11px] text-slate-500 mt-0.5"><i class="fa-solid fa-building-columns mr-1"></i>${p.orgao}</div>
-                        </td>
-                        <td class="py-3.5 px-4 align-top">
-                            <div class="font-semibold text-slate-800">${p.entidade}</div>
-                            ${p.fonte ? `<span class="text-[10px] bg-slate-100 text-slate-600 px-1.5 py-0.5 rounded mt-1 inline-block">${p.fonte}</span>` : ''}
-                        </td>
-                        <td class="py-3.5 px-4 align-top max-w-xs">
-                            <div class="font-semibold text-blue-700 text-[11px]">${p.modalidade}</div>
-                            <div class="text-slate-600 mt-0.5 line-clamp-2" title="${p.objeto}">${p.objeto}</div>
-                            ${p.obs ? `<div class="text-[11px] text-slate-400 italic mt-1 line-clamp-1" title="${p.obs}"><i class="fa-regular fa-comment-dots mr-1"></i>${p.obs}</div>` : ''}
-                        </td>
-                        <td class="py-3.5 px-4 align-top font-bold text-slate-800 whitespace-nowrap">
-                            ${formatarMoeda(p.valor)}
-                        </td>
-                        <td class="py-3.5 px-4 align-top whitespace-nowrap">
-                            ${obterBadgeEtapa(p.etapa)}
-                        </td>
-                        <td class="py-3.5 px-4 align-top text-center whitespace-nowrap">
-                            <div class="inline-flex items-center gap-1 bg-slate-100 p-1 rounded-lg border border-slate-200">
-                                <a href="https://antoniomarcosmontaimessias-dot.github.io/estudo_tecnico_inicial/" target="_blank" title="Abrir Estudo Técnico Inicial" class="w-6 h-6 rounded hover:bg-indigo-600 hover:text-white text-indigo-600 flex items-center justify-center transition"><i class="fa-solid fa-compass-drafting text-[11px]"></i></a>
-                                <a href="https://antoniomarcosmontaimessias-dot.github.io/plano_de_trabalho_osc/" target="_blank" title="Abrir Plano de Trabalho" class="w-6 h-6 rounded hover:bg-emerald-600 hover:text-white text-emerald-600 flex items-center justify-center transition"><i class="fa-solid fa-file-signature text-[11px]"></i></a>
-                                <a href="https://antoniomarcosmontaimessias-dot.github.io/avaliacao_gestor/" target="_blank" title="Abrir Avaliação do Gestor" class="w-6 h-6 rounded hover:bg-amber-600 hover:text-white text-amber-600 flex items-center justify-center transition"><i class="fa-solid fa-clipboard-check text-[11px]"></i></a>
-                                <a href="https://antoniomarcosmontaimessias-dot.github.io/lista_verificacao/" target="_blank" title="Abrir Lista de Verificação AGCP" class="w-6 h-6 rounded hover:bg-purple-600 hover:text-white text-purple-600 flex items-center justify-center transition"><i class="fa-solid fa-list-check text-[11px]"></i></a>
-                            </div>
-                        </td>
-                        <td class="py-3.5 px-4 align-top text-right whitespace-nowrap">
-                            <button onclick="editarProcesso('${p.id}')" class="text-slate-500 hover:text-blue-600 p-1.5 rounded transition" title="Editar registro">
-                                <i class="fa-solid fa-pen-to-square"></i>
-                            </button>
-                            <button onclick="excluirProcesso('${p.id}')" class="text-slate-500 hover:text-red-600 p-1.5 rounded transition" title="Excluir registro">
-                                <i class="fa-solid fa-trash-can"></i>
-                            </button>
-                        </td>
-                    `;
-                    tbody.appendChild(tr);
-                });
-            }
+            <div class="termo-box">
+              <div class="termo-header">
+                <span>Modelo 1 — Termo de Ratificação Técnica e Ciência do Gestor (Secretarias)</span>
+                <button type="button" class="btn-copiar" data-target="termo-secretaria">Copiar texto</button>
+              </div>
+              <pre class="termo-texto" id="termo-secretaria">TERMO DE RATIFICAÇÃO TÉCNICA E CIÊNCIA DO GESTOR
 
-            document.getElementById('contadorRegistros').innerText = `Mostrando ${filtrados.length} de ${processos.length} registros`;
-        }
+I – DA RATIFICAÇÃO TÉCNICA
+Eu, abaixo assinado, técnico lotado(a) na Secretaria Municipal de [____], RATIFICO a autoria e o conteúdo técnico do(s) seguinte(s) documento(s) nato-digital(is) anexado(s) aos autos:
+- Estudo Técnico Inicial XX-XX-XXXX (0000000)
+- Manifestação Gestor  XX-XX-XXXX (0000000)
 
-        // Controle do Modal
-        function abrirModalNovoProcesso() {
-            document.getElementById('formProcesso').reset();
-            document.getElementById('procId').value = '';
-            document.getElementById('modalTitulo').innerHTML = '<i class="fa-solid fa-folder-plus text-blue-400"></i><span>Cadastrar Demanda / Instrumento no SGTC</span>';
-            document.getElementById('modalProcesso').classList.remove('hidden');
-            document.getElementById('modalProcesso').classList.add('flex');
-        }
+II – DA CIÊNCIA E APROVAÇÃO DO GESTOR
+Eu, abaixo assinado, na qualidade de Gestor(a) da Secretaria Municipal de [_____], declaro CIÊNCIA dos documentos anexados aos autos e SUBSCREVO E APROVO, ratificando sua validade para o prosseguimento da celebração da parceria/ajuste, nos termos da Lei.
 
-        function fecharModal() {
-            document.getElementById('modalProcesso').classList.add('hidden');
-            document.getElementById('modalProcesso').classList.remove('flex');
-        }
+Paraguaçu Paulista, na data da assinatura digital.
 
-        function salvarProcesso(e) {
-            e.preventDefault();
-            const processos = obterProcessos();
-            const id = document.getElementById('procId').value;
+[NOME DO TÉCNICO]
+[Cargo]
 
-            const novoObj = {
-                id: id || Date.now().toString(),
-                numero: document.getElementById('procNumero').value.trim(),
-                modalidade: document.getElementById('procModalidade').value,
-                entidade: document.getElementById('procEntidade').value.trim(),
-                orgao: document.getElementById('procOrgao').value.trim(),
-                objeto: document.getElementById('procObjeto').value.trim(),
-                valor: parseFloat(document.getElementById('procValor').value) || 0,
-                etapa: document.getElementById('procEtapa').value,
-                fonte: document.getElementById('procFonte').value.trim(),
-                obs: document.getElementById('procObs').value.trim()
-            };
+[NOME DO SECRETÁRIO]
+Secretário(a) Municipal</pre>
+            </div>
 
-            if (id) {
-                const index = processos.findIndex(p => p.id === id);
-                if (index !== -1) processos[index] = novoObj;
-            } else {
-                processos.unshift(novoObj);
-            }
+            <div class="termo-box">
+              <div class="termo-header">
+                <span>Modelo 2 — Termo de Ratificação (Assessoria em Gestão de Convênios e Projetos - AGCP)</span>
+                <button type="button" class="btn-copiar" data-target="termo-agcp">Copiar texto</button>
+              </div>
+              <pre class="termo-texto" id="termo-agcp">TERMO DE RATIFICAÇÃO
 
-            salvarListaProcessos(processos);
-            fecharModal();
-        }
+Eu, abaixo assinado, técnico lotado na Assessoria em Gestão de Convênios e Projetos - AGCP, RATIFICO para os devidos fins administrativos e de controle a autoria e a integralidade da Lista Verificação  XX-XX-XXXX (0000000) anexada nos autos, declarando que a conferência documental foi devidamente realizada por esta unidade para a instrução do processo de parceria.
 
-        function editarProcesso(id) {
-            const processos = obterProcessos();
-            const p = processos.find(item => item.id === id);
-            if (!p) return;
+Paraguaçu Paulista, na data da assinatura digital.
 
-            document.getElementById('procId').value = p.id;
-            document.getElementById('procNumero').value = p.numero;
-            document.getElementById('procModalidade').value = p.modalidade;
-            document.getElementById('procEntidade').value = p.entidade;
-            document.getElementById('procOrgao').value = p.orgao;
-            document.getElementById('procObjeto').value = p.objeto;
-            document.getElementById('procValor').value = p.valor;
-            document.getElementById('procEtapa').value = p.etapa;
-            document.getElementById('procFonte').value = p.fonte || '';
-            document.getElementById('procObs').value = p.obs || '';
+[NOME DO TÉCNICO]
+[Cargo]</pre>
+            </div>
+          </section>
 
-            document.getElementById('modalTitulo').innerHTML = '<i class="fa-solid fa-pen-to-square text-amber-400"></i><span>Editar Registro do SGTC</span>';
-            document.getElementById('modalProcesso').classList.remove('hidden');
-            document.getElementById('modalProcesso').classList.add('flex');
-        }
+          <!-- Etapa 3 -->
+          <section class="guia-etapa">
+            <h3>3. Envio e Guarda do Arquivo de Dados (JSON)</h3>
+            <p>
+              O arquivo <strong>.JSON</strong> funciona como uma "cópia editável" do formulário. Ele permite que, caso seja necessária alguma correção ou ajuste solicitado pelo técnico ou pelo gestor, o arquivo seja carregado de volta no formulário FPA sem a necessidade de redigitar tudo do zero.
+            </p>
+            <div class="alerta-json">
+              <strong>Regra importante:</strong> O SEI-Cidades não aceita a anexação direta de arquivos com extensão <strong>.JSON</strong> na árvore de documentos do processo (por restrição de formatos permitidos no sistema).
+            </div>
+            <p><strong>Como proceder com o arquivo .json:</strong></p>
+            <ul>
+              <li><strong>OSCs / Entidades:</strong> Envie o arquivo <strong>.JSON</strong> ao e-mail da Secretaria responsável e informe o protocolo do peticionamento no SEI, identificando no assunto o nome da entidade e o número do processo SEI.</li>
+              <li><strong>Técnicos da Prefeitura:</strong> Salve o arquivo <strong>.json</strong> na pasta compartilhada da rede/nuvem institucional vinculada ao número do processo SEI correspondente, garantindo que outros técnicos da equipe possam reabrir o formulário para revisões futuras.</li>
+              <li><strong>Em caso de diligência ou correção:</strong> Basta abrir o formulário correspondente no portal FPA, clicar na opção de <strong>Importar/Carregar JSON</strong>, selecionar o arquivo salvo, corrigir apenas os pontos solicitados e gerar novamente os arquivos (<strong>PDF + JSON</strong>) atualizados.</li>
+            </ul>
+          </section>
+        </div>
+      </details>
 
-        function excluirProcesso(id) {
-            if (!confirm('Deseja realmente remover este registro do painel de controle?')) return;
-            const processos = obterProcessos().filter(p => p.id !== id);
-            salvarListaProcessos(processos);
-        }
+      <section class="orientacoes-finais" aria-label="Orientações e avisos importantes">
+        <div class="bloco-orientacao">
+          <h2>Em caso de dúvidas, consulte:</h2>
+          <ul>
+            <li><a href="https://www.eparaguacu.sp.gov.br/" target="_blank" rel="noopener noreferrer">Portal da Prefeitura de Paraguaçu Paulista</a></li>
+            <li><a href="https://cidades.sei.sp.gov.br/marilia/sei/modulos/pesquisa/md_pesq_documento_consulta_externa.php?2hNbF2LjM1PmX0Wrq_z3qSKef1dC4l_hZ4CCMq01NtmqhHkjusNHRUu1Z_GugUam6YumEazfAVsRJpi2_Qx3njE-2EBbJlxecJ_Jhagt2jLur2UURGkDnYCcgRqWPKnCkDdzbSOQ2XEfCQnI2YWiaA,," target="_blank" rel="noopener noreferrer">Guia Como Preencher o Plano de Trabalho</a></li>
+            <li>E-mail: <a href="mailto:marcos.messias@eparaguacu.sp.gov.br">marcos.messias@eparaguacu.sp.gov.br</a></li>
+          </ul>
+        </div>
 
-        // Exportar / Importar Backup JSON
-        function exportarBackup() {
-            const dados = obterProcessos();
-            const blob = new Blob([JSON.stringify(dados, null, 2)], { type: 'application/json' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `SGTC_Backup_${new Date().toISOString().slice(0,10)}.json`;
-            a.click();
-            URL.revokeObjectURL(url);
-        }
+        <div class="aviso-transitorio" role="note">
+          <strong>Atenção!</strong>
+          <p>
+            Ambiente disponibilizado temporariamente para padronizar a instrução processual no SEI até que novo sistema dedicado seja disponibilizado pela Prefeitura.
+          </p>
+          <p>
+            Após o preenchimento, siga as orientações de anexação no SEI e envio do arquivo JSON.
+          </p>
+        </div>
+      </section>
+    </div>
+  </main>
 
-        function importarBackup(event) {
-            const file = event.target.files[0];
-            if (!file) return;
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                try {
-                    const json = JSON.parse(e.target.result);
-                    if (Array.isArray(json)) {
-                        salvarListaProcessos(json);
-                        alert('Backup importado com sucesso!');
-                    } else {
-                        alert('Formato de arquivo inválido.');
-                    }
-                } catch (err) {
-                    alert('Erro ao ler o arquivo JSON.');
-                }
-            };
-            reader.readAsText(file);
-            event.target.value = '';
-        }
+  <footer>
+    <div class="container footer-inner">
+      <span>Assessoria em Gestão de Convênios e Projetos — Paraguaçu Paulista/SP</span>
+      <span><a href="https://antoniomarcosmontaimessias-dot.github.io/fpa/" style="color: inherit; text-decoration: none;">FPA • Instrução processual SEI</a></span>
+    </div>
+  </footer>
 
-        // Inicializar ao carregar a página
-        document.addEventListener('DOMContentLoaded', renderizarTabela);
-    </script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const botoesFiltro = document.querySelectorAll(".filtro-btn");
+      const cards = document.querySelectorAll(".card");
+
+      botoesFiltro.forEach((botao) => {
+        botao.addEventListener("click", () => {
+          const filtroSelecionado = botao.dataset.filtro;
+
+          botoesFiltro.forEach((b) => b.classList.remove("ativo"));
+          botao.classList.add("ativo");
+
+          cards.forEach((card) => {
+            const perfilCard = card.dataset.perfil;
+            const exibir = filtroSelecionado === "todos" || perfilCard === filtroSelecionado;
+            card.classList.toggle("oculto", !exibir);
+          });
+        });
+      });
+
+      const botoesCopiar = document.querySelectorAll(".btn-copiar");
+      botoesCopiar.forEach((botao) => {
+        botao.addEventListener("click", async () => {
+          const alvo = document.getElementById(botao.dataset.target);
+          if (!alvo) return;
+          try {
+            await navigator.clipboard.writeText(alvo.textContent);
+            const textoOriginal = botao.textContent;
+            botao.textContent = "Copiado!";
+            setTimeout(() => {
+              botao.textContent = textoOriginal;
+            }, 2000);
+          } catch (err) {
+            botao.textContent = "Selecione e copie";
+          }
+        });
+      });
+    });
+  </script>
 </body>
 </html>

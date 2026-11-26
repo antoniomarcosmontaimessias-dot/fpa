@@ -144,6 +144,15 @@
     position:relative;
   }
   .item-card + .item-card{ margin-top:1rem; }
+  .item-card-actions{ display:flex; align-items:center; gap:.5rem; flex-wrap:wrap; }
+  .csv-msg{ margin-top:.75rem; font-size:.85rem; }
+  .csv-msg[data-state="ok"]{ color:#1f6b3a; } .csv-msg[data-state="warn"]{ color:#8a5a00; } .csv-msg[data-state="erro"]{ color:#a12727; }
+  .csv-msg ul{ margin:.4rem 0 0 1.1rem; list-style:disc; }
+  .csv-steps{ margin:.5rem 0 .9rem 1.2rem; list-style:decimal; font-size:.85rem; line-height:1.5; max-width:78ch; }
+  .csv-cols{ width:100%; border-collapse:collapse; font-size:.8rem; margin-top:.5rem; }
+  .csv-cols th, .csv-cols td{ border:1px solid var(--line); padding:.25rem .5rem; text-align:left; vertical-align:top; }
+  .csv-cols code{ font-family:'Space Mono',monospace; font-size:.75rem; }
+  .csv-vals{ font-size:.8rem; line-height:1.5; margin-top:.4rem; }
   .item-card-head{
     display:flex; align-items:center; justify-content:space-between; gap:.75rem;
     margin-bottom:.9rem; padding-bottom:.7rem; border-bottom:1px dashed var(--line);
@@ -1220,6 +1229,8 @@
           <h2 id="h-implantacao" class="font-serif text-2xl mt-3">Custo de implantação</h2>
           <p class="field-hint mt-2 max-w-[70ch]">Itens de custo único (bens, adequações, aquisições iniciais). O total de cada item é calculado como quantidade × valor unitário. Na tabela de lançamento escolha a categoria (o grupo é preenchido automaticamente), descreva o item e distribua o valor pelos meses — digitando em cada mês ou usando os botões "Copiar do custo da despesa lançada", "Parcela única (Mês 1)" e "Repetir valor do Mês 1".</p>
 
+          <div id="csv-mount-impl" class="no-print"></div>
+
           <div id="implantacao-list" class="mt-6 space-y-5" aria-live="polite"></div>
 
           <div class="mt-5">
@@ -1247,6 +1258,8 @@
           <datalist id="dl-vinculo-sugestao"></datalist>
           <p class="field-hint">O campo "Vínculo" abaixo já lista as opções da aba "Instruções" (CLT, voluntário, RPA, contrato, estágio, bolsa, etc.).</p>
 
+          <div id="csv-mount-rh" class="no-print"></div>
+
           <div id="rh-list" class="mt-6 space-y-5" aria-live="polite"></div>
 
           <div class="mt-5">
@@ -1264,6 +1277,8 @@
           <p class="section-kicker">Seção 10 · aba "Custo_Operacional"</p>
           <h2 id="h-operacional" class="font-serif text-2xl mt-3">Custo operacional</h2>
           <p class="field-hint mt-2 max-w-[70ch]">Despesas recorrentes de manutenção e funcionamento. O total mensal de cada item é calculado como valor unitário × quantidade/mês. Na tabela de lançamento escolha a categoria (o grupo é preenchido automaticamente), descreva o item e distribua o valor pelos meses — digitando em cada mês ou usando os botões "Copiar do custo da despesa lançada", "Parcela única (Mês 1)" e "Repetir valor do Mês 1".</p>
+
+          <div id="csv-mount-oper" class="no-print"></div>
 
           <div id="operacional-list" class="mt-6 space-y-5" aria-live="polite"></div>
 
@@ -2482,7 +2497,7 @@ function buildImplantacaoCard(u){
   <div class="item-card" id="${p}" data-uid="${u}" data-type="impl">
     <div class="item-card-head">
       <span class="item-badge">Item</span>
-      <button type="button" class="btn btn-danger-ghost btn-sm" data-action="remove" data-remove-target="${p}" data-remove-type="impl" aria-label="Remover este item de implantação">Remover</button>
+      <div class="item-card-actions"><button type="button" class="btn btn-outline btn-sm no-print" data-action="duplicate" data-dup-type="impl" data-dup-uid="${u}" title="Cria uma cópia deste card, com os mesmos dados, logo abaixo dele." aria-label="Duplicar este item de implantação">Duplicar</button> <button type="button" class="btn btn-danger-ghost btn-sm" data-action="remove" data-remove-target="${p}" data-remove-type="impl" aria-label="Remover este item de implantação">Remover</button></div>
     </div>
     <div class="grid sm:grid-cols-2 lg:grid-cols-5 gap-4">
       <div>
@@ -2526,7 +2541,7 @@ function buildOperacionalCard(u){
   <div class="item-card" id="${p}" data-uid="${u}" data-type="oper">
     <div class="item-card-head">
       <span class="item-badge">Item</span>
-      <button type="button" class="btn btn-danger-ghost btn-sm" data-action="remove" data-remove-target="${p}" data-remove-type="oper" aria-label="Remover este item operacional">Remover</button>
+      <div class="item-card-actions"><button type="button" class="btn btn-outline btn-sm no-print" data-action="duplicate" data-dup-type="oper" data-dup-uid="${u}" title="Cria uma cópia deste card, com os mesmos dados, logo abaixo dele." aria-label="Duplicar este item operacional">Duplicar</button> <button type="button" class="btn btn-danger-ghost btn-sm" data-action="remove" data-remove-target="${p}" data-remove-type="oper" aria-label="Remover este item operacional">Remover</button></div>
     </div>
     <div class="grid sm:grid-cols-2 lg:grid-cols-5 gap-4">
       <div>
@@ -2614,7 +2629,7 @@ function buildRHCard(u){
   <div class="item-card" id="${p}" data-uid="${u}" data-type="rh">
     <div class="item-card-head">
       <span class="item-badge">Função/cargo</span>
-      <button type="button" class="btn btn-danger-ghost btn-sm" data-action="remove" data-remove-target="${p}" data-remove-type="rh" aria-label="Remover esta função/cargo">Remover</button>
+      <div class="item-card-actions"><button type="button" class="btn btn-outline btn-sm no-print" data-action="duplicate" data-dup-type="rh" data-dup-uid="${u}" title="Cria uma cópia deste card, com os mesmos dados, logo abaixo dele." aria-label="Duplicar esta função/cargo">Duplicar</button> <button type="button" class="btn btn-danger-ghost btn-sm" data-action="remove" data-remove-target="${p}" data-remove-type="rh" aria-label="Remover esta função/cargo">Remover</button></div>
     </div>
 
     <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -3352,8 +3367,301 @@ function vtFlash(btn, text){
   el._t = window.setTimeout(() => { el.textContent = ''; }, 7000);
 }
 
+
+/* ===================== Duplicar card e importar CSV (Seções 8, 9 e 10) =====================
+   Uma única definição de colunas (CSV_SPECS) alimenta o modelo CSV exportado, a orientação na tela e o importador. */
+const CSV_MESES = Array.from({length:12}, (_, i) => ({ k:'mes_' + (i+1), f:'mes-' + (i+1), t:'money', d:'Lançamento do Mês ' + (i+1) + ' em R$ (opcional)' }));
+const CSV_META = { k:'meta_vinculada', f:'meta', t:'meta', d:'Meta vinculada: "Meta 1", "Meta 2"… ou só o número (1, 2…), conforme a ordem das metas da Seção 5' };
+const CSV_SPECS = {
+  impl: { container:'implantacao-list', badge:'Item', titulo:'Custo_Implantação', arquivo:'modelo_importacao_custo_implantacao.csv', build:buildImplantacaoCard, categorias:CATEGORIAS_NAO_RH,
+    cols:[ CSV_META,
+      { k:'unidade', f:'unidade', t:'sel', opts:UNIDADES, d:'Unidade de medida (lista abaixo)' },
+      { k:'quantidade', f:'quantidade', t:'num', d:'Quantidade (número; ex.: 2 ou 1,5)' },
+      { k:'valor_unitario', f:'valorunit', t:'money', d:'Valor unitário em R$ (ex.: 3.500,00)' },
+      { k:'categoria', f:'categoria', t:'cat', d:'Categoria de despesas (nome exato da lista abaixo; o Grupo é preenchido sozinho)' },
+      { k:'descricao', f:'descricao', t:'txt', d:'Descrição (obrigatória nas categorias "Diversos"/"Outros")' },
+      { k:'item_despesa', f:'item', t:'txt', d:'Item de despesa' } ].concat(CSV_MESES, [
+      { k:'memoria_calculo', f:'memoria', t:'txt', d:'Memória de cálculo / justificativa da necessidade' } ]),
+    exemplos:[
+      { meta_vinculada:'Meta 1', unidade:'unidade', quantidade:'2', valor_unitario:'3.500,00', categoria:'Bens E Equipamentos De Informática', item_despesa:'Notebook para a equipe técnica', mes_1:'7.000,00', memoria_calculo:'Cotação nº 1 (3 propostas anexas)' },
+      { meta_vinculada:'Meta 1', unidade:'unidade', quantidade:'1', valor_unitario:'1.200,00', categoria:'Outros Bens E Materiais Permanentes', item_despesa:'Impressora multifuncional', mes_1:'1.200,00' } ] },
+  oper: { container:'operacional-list', badge:'Item', titulo:'Custo_Operacional', arquivo:'modelo_importacao_custo_operacional.csv', build:buildOperacionalCard, categorias:CATEGORIAS_NAO_RH,
+    cols:[ CSV_META,
+      { k:'unidade', f:'unidade', t:'sel', opts:UNIDADES, d:'Unidade de medida (lista abaixo)' },
+      { k:'valor_unitario', f:'valorunit', t:'money', d:'Valor unitário em R$ (ex.: 450,00)' },
+      { k:'quantidade_mes', f:'qtdmes', t:'num', d:'Quantidade por mês (número)' },
+      { k:'categoria', f:'categoria', t:'cat', d:'Categoria de despesas (nome exato da lista abaixo; o Grupo é preenchido sozinho)' },
+      { k:'descricao', f:'descricao', t:'txt', d:'Descrição (obrigatória nas categorias "Diversos"/"Outros")' },
+      { k:'item_despesa', f:'item', t:'txt', d:'Item de despesa' } ].concat(CSV_MESES, [
+      { k:'memoria_calculo', f:'memoria', t:'txt', d:'Memória de cálculo / justificativa / critério de rateio' } ]),
+    exemplos:[
+      { meta_vinculada:'Meta 1', unidade:'mês', valor_unitario:'450,00', quantidade_mes:'1', categoria:'Água E Esgoto', item_despesa:'Conta de água e esgoto', memoria_calculo:'Média das últimas 12 faturas',
+        mes_1:'450,00', mes_2:'450,00', mes_3:'450,00', mes_4:'450,00', mes_5:'450,00', mes_6:'450,00', mes_7:'450,00', mes_8:'450,00', mes_9:'450,00', mes_10:'450,00', mes_11:'450,00', mes_12:'450,00' },
+      { meta_vinculada:'Meta 1', unidade:'mês', valor_unitario:'150,00', quantidade_mes:'1', categoria:'Internet/ Tv A Cabo', item_despesa:'Internet banda larga' } ] },
+  rh: { container:'rh-list', badge:'Função/cargo', titulo:'Custo_RH', arquivo:'modelo_importacao_custo_rh.csv', build:buildRHCard, categorias:CATEGORIAS_RH,
+    cols:[ CSV_META,
+      { k:'quantidade', f:'quantidade', t:'num', d:'Quantidade de profissionais (número inteiro; se vazio, mantém 1)' },
+      { k:'vinculo', f:'vinculo', t:'sel', opts:VINCULOS_SUGESTAO, d:'Vínculo (lista abaixo)' },
+      { k:'salario_bruto', f:'bruto', t:'money', d:'Salário bruto em R$ — FGTS, 13º e férias (1/3) são calculados sozinhos a partir dele' },
+      { k:'inss', f:'inss', t:'money', d:'INSS retido em R$' },
+      { k:'irrf', f:'irrf', t:'money', d:'IRRF em R$' },
+      { k:'salario_familia', f:'salfamilia', t:'money', d:'Salário família em R$' },
+      { k:'inss_patronal', f:'insspatronal', t:'money', d:'Contribuição INSS patronal em R$' },
+      { k:'inss_ferias', f:'inssferias', t:'money', d:'INSS s/férias (1/3) em R$' },
+      { k:'irrf_ferias', f:'irrfferias', t:'money', d:'IRRF s/férias (1/3) em R$' },
+      { k:'indenizacoes', f:'indenizacoes', t:'money', d:'Indenizações em R$' },
+      { k:'multa_fgts', f:'multa', t:'money', d:'Multa rescisória FGTS em R$' },
+      { k:'aviso_previo', f:'aviso', t:'money', d:'Aviso prévio em R$' },
+      { k:'assistencia_medica', f:'assistmedica', t:'money', d:'Assistência médica em R$' },
+      { k:'assistencia_odonto', f:'assistodonto', t:'money', d:'Assistência odontológica em R$' },
+      { k:'vale_alimentacao', f:'valealim', t:'money', d:'Vale alimentação em R$' },
+      { k:'vale_refeicao', f:'valerefeicao', t:'money', d:'Vale refeição em R$' },
+      { k:'vale_transporte', f:'valetransp', t:'money', d:'Vale transporte em R$' },
+      { k:'seguros', f:'seguros', t:'money', d:'Seguros em R$' },
+      { k:'pis', f:'pis', t:'money', d:'Contribuição do PIS em R$' },
+      { k:'gratificacoes', f:'gratificacoes', t:'money', d:'Gratificações em R$' },
+      { k:'outras_despesas', f:'outras', t:'money', d:'Outras despesas de RH em R$' },
+      { k:'categoria', f:'categoria', t:'cat', d:'Categoria de despesas (nome exato da lista abaixo; o Grupo é preenchido sozinho)' },
+      { k:'descricao', f:'descricao', t:'txt', d:'Descrição (se Diversos/Outros)' },
+      { k:'funcao_cargo', f:'funcao', t:'txt', d:'Função-cargo / carga horária semanal / especificação' },
+      { k:'rubrica', f:'rubrica', t:'rub', d:'Rubrica do menu de lançamento (lista abaixo)' } ].concat(CSV_MESES, [
+      { k:'memoria_calculo', f:'memoria', t:'txt', d:'Memória de cálculo e justificativa / critério de rateio' } ]),
+    exemplos:[
+      { meta_vinculada:'Meta 1', quantidade:'1', vinculo:'CLT', salario_bruto:'3.000,00', inss:'270,00', categoria:'Salários E Ordenados (Exceto Diretoria)', funcao_cargo:'Educador social - 40h semanais', rubrica:'Salário líquido', memoria_calculo:'Piso da categoria' },
+      { meta_vinculada:'Meta 1', quantidade:'2', vinculo:'CLT', salario_bruto:'2.200,00', categoria:'Salários E Ordenados (Exceto Diretoria)', funcao_cargo:'Auxiliar administrativo - 40h semanais', rubrica:'Total do cargo (todas as rubricas)' } ] }
+};
+const csvNorm = s => String(s == null ? '' : s).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]+/g, ' ').trim();
+
+/* ---- Duplicar ---- */
+function csvMsg(type, html, state){
+  const el = $('csv-msg-' + type);
+  if(!el) return;
+  el.innerHTML = html || '';
+  el.dataset.state = state || '';
+}
+/* Valores padrão de um card novo (para saber se o card já foi preenchido). */
+const _csvDefaultsCache = {};
+function csvDefaults(type){
+  if(_csvDefaultsCache[type]) return _csvDefaultsCache[type];
+  const tmp = document.createElement('div');
+  tmp.innerHTML = CSV_SPECS[type].build('0');
+  const map = {};
+  tmp.querySelectorAll('input[id], select[id], textarea[id]').forEach(el => {
+    const suf = el.id.slice((type + '-0').length);
+    if(el.tagName === 'SELECT'){ const o = Array.from(el.options).find(x => x.defaultSelected) || el.options[0]; map[suf] = o ? o.value : ''; }
+    else map[suf] = el.defaultValue;
+  });
+  return (_csvDefaultsCache[type] = map);
+}
+function cardPreenchido(card, type){
+  const def = csvDefaults(type), pre = type + '-' + card.dataset.uid;
+  return Array.from(card.querySelectorAll('input[id], select[id], textarea[id]')).some(el => {
+    if(el.readOnly || el.type === 'hidden') return false;
+    const suf = el.id.slice(pre.length);
+    if(!(suf in def)) return false;
+    // campos em R$ são comparados pelo número (o cálculo automático grava "R$ 0,00" onde o padrão é "0,00")
+    return el.classList.contains('money-mask') ? moneyMaskToNumber(el.value) !== moneyMaskToNumber(def[suf]) : el.value !== def[suf];
+  });
+}
+function csvNovoCard(type){
+  const spec = CSV_SPECS[type], u = nextUid();
+  $(spec.container).insertAdjacentHTML('beforeend', spec.build(u));
+  return $(type + '-' + u);
+}
+function duplicarCard(type, uid){
+  const spec = CSV_SPECS[type], orig = $(type + '-' + uid);
+  if(!spec || !orig) return;
+  if(!cardPreenchido(orig, type)){
+    csvMsg(type, 'Preencha o card antes de duplicá-lo: este card ainda está vazio.', 'warn');
+    announce('Preencha o card antes de duplicá-lo.');
+    return;
+  }
+  const novo = csvNovoCard(type), nuid = novo.dataset.uid, pre = type + '-' + uid;
+  rebuildMetaSelects();                              // o select "Meta vinculada" do card novo precisa das opções antes de receber o valor
+  orig.querySelectorAll('input[id], select[id], textarea[id]').forEach(el => {
+    if(el.readOnly || isTransientField(el)) return;  // totais e Grupo são recalculados
+    const dst = $(type + '-' + nuid + el.id.slice(pre.length));
+    if(dst) dst.value = el.value;
+  });
+  orig.after(novo);                                  // a cópia fica logo abaixo do original
+  renumberSimple(spec.container, spec.badge);
+  autoResizeAll(novo);
+  calcAll();
+  csvMsg(type, '', '');
+  announce('Card duplicado.');
+  const badge = novo.querySelector('.item-badge');
+  novo.scrollIntoView({ block:'nearest', behavior:'smooth' });
+  const first = novo.querySelector('select, input:not([type=hidden]):not([readonly]), textarea');
+  if(first) first.focus({ preventScroll:true });
+  if(badge) csvMsg(type, 'Card duplicado: ' + esc(badge.textContent) + ' (cópia logo abaixo do original).', 'ok');
+}
+
+/* ---- CSV: leitura ---- */
+function csvParse(texto){
+  const t = String(texto || '').replace(/^﻿/, '');
+  const prim = t.split(/\r?\n/)[0] || '';
+  const delim = [';', ',', '\t'].map(d => [d, prim.split(d).length]).sort((a, b) => b[1] - a[1])[0];
+  const D = delim[1] > 1 ? delim[0] : ';';
+  const rows = []; let row = [], cel = '', q = false;
+  for(let i = 0; i < t.length; i++){
+    const c = t[i];
+    if(q){ if(c === '"'){ if(t[i+1] === '"'){ cel += '"'; i++; } else q = false; } else cel += c; }
+    else if(c === '"' && cel === '') q = true;
+    else if(c === D){ row.push(cel); cel = ''; }
+    else if(c === '\n' || c === '\r'){ if(c === '\r' && t[i+1] === '\n') i++; row.push(cel); cel = ''; rows.push(row); row = []; }
+    else cel += c;
+  }
+  if(cel !== '' || row.length){ row.push(cel); rows.push(row); }
+  return rows.filter(r => r.some(x => String(x).trim() !== ''));
+}
+function csvNumero(bruto){
+  let s = String(bruto == null ? '' : bruto).replace(/R\$|\s/g, '');
+  if(s === '') return { ok:true, vazio:true, n:0 };
+  if(s.indexOf(',') > -1) s = s.replace(/\./g, '').replace(',', '.');
+  else if(/^\d{1,3}(\.\d{3})+$/.test(s)) s = s.replace(/\./g, '');
+  if(!/^\d+(\.\d+)?$/.test(s)) return { ok:false };
+  return { ok:true, n:parseFloat(s) };
+}
+function csvAchar(lista, bruto, rotulo){
+  const n = csvNorm(bruto);
+  return lista.find(x => csvNorm(rotulo ? rotulo(x) : x) === n) || null;
+}
+async function lerArquivoCSV(file, type){
+  if(file.size > 5 * 1024 * 1024){ csvMsg(type, 'Arquivo muito grande (máximo de 5 MB).', 'erro'); return; }
+  let texto;
+  try{
+    const buf = await file.arrayBuffer();
+    try{ texto = new TextDecoder('utf-8', { fatal:true }).decode(buf); }
+    catch(_){ texto = new TextDecoder('windows-1252').decode(buf); }   // CSV salvo pelo Excel em "CSV (separado por vírgulas)"
+  }catch(_){ csvMsg(type, 'Não foi possível ler o arquivo selecionado.', 'erro'); return; }
+  importarCSV(type, texto);
+}
+function importarCSV(type, texto){
+  const spec = CSV_SPECS[type];
+  const rows = csvParse(texto);
+  if(rows.length < 2){ csvMsg(type, 'O arquivo precisa ter a linha de cabeçalho e ao menos uma linha de dados. Baixe o modelo CSV para ver a estrutura.', 'erro'); return; }
+  const porNome = {}; spec.cols.forEach(c => { porNome[c.k] = c; });
+  const colunas = rows[0].map(h => porNome[csvNorm(h).replace(/ /g, '_')] || null);
+  const avisos = [];
+  rows[0].forEach((h, i) => { if(!colunas[i] && String(h).trim() !== '') avisos.push('Coluna "' + String(h).trim() + '" não reconhecida: ignorada.'); });
+  if(!colunas.some(Boolean)){ csvMsg(type, 'Nenhuma coluna do cabeçalho foi reconhecida. Baixe o modelo CSV e use os nomes das colunas exatamente como nele.', 'erro'); return; }
+  const dados = rows.slice(1);
+
+  // Fase 1: escolhe o card de cada linha — primeiro os cards vazios existentes, depois cria novos. Cards já preenchidos nunca são alterados.
+  const vazios = Array.from($(spec.container).querySelectorAll('.item-card')).filter(c => !cardPreenchido(c, type));
+  let reaproveitados = 0, novos = 0;
+  const alvo = dados.map(() => {
+    const c = vazios.shift();
+    if(c){ reaproveitados++; return c; }
+    novos++; return csvNovoCard(type);
+  });
+  rebuildMetaSelects();
+  const metas = getMetaList();
+
+  // Fase 2: grava os valores
+  dados.forEach((linha, li) => {
+    const card = alvo[li], uid = card.dataset.uid, nl = li + 2;
+    colunas.forEach((col, ci) => {
+      if(!col) return;
+      const bruto = String(linha[ci] == null ? '' : linha[ci]).trim();
+      if(bruto === '') return;
+      const el = $(type + '-' + uid + '-' + col.f);
+      if(!el) return;
+      if(col.t === 'txt'){ el.value = bruto; }
+      else if(col.t === 'num' || col.t === 'money'){
+        const r = csvNumero(bruto);
+        if(!r.ok){ avisos.push('Linha ' + nl + ': valor "' + bruto + '" inválido em "' + col.k + '" (use números, ex.: 1.234,56): campo mantido.'); return; }
+        el.value = col.t === 'money' ? numberToMoneyMask(r.n) : String(r.n);
+      }
+      else if(col.t === 'sel' || col.t === 'cat'){
+        const lista = col.t === 'cat' ? spec.categorias : col.opts, ach = csvAchar(lista, bruto);
+        if(ach) el.value = ach; else avisos.push('Linha ' + nl + ': "' + bruto + '" não consta na lista de "' + col.k + '": campo deixado em branco.');
+      }
+      else if(col.t === 'rub'){
+        const ach = RUBRICAS_RH.find(r => csvNorm(r.label) === csvNorm(bruto) || csvNorm(r.key) === csvNorm(bruto));
+        if(ach) el.value = ach.key; else avisos.push('Linha ' + nl + ': rubrica "' + bruto + '" não reconhecida: mantida a rubrica padrão.');
+      }
+      else if(col.t === 'meta'){
+        const m = csvNorm(bruto).match(/^(?:meta )?(\d+)$/), meta = m ? metas[parseInt(m[1], 10) - 1] : metas.find(x => csvNorm(x.label) === csvNorm(bruto));
+        if(meta) el.value = meta.uid; else avisos.push('Linha ' + nl + ': meta "' + bruto + '" não existe na Seção 5: meta vinculada deixada em branco.');
+      }
+    });
+  });
+  renumberSimple(spec.container, spec.badge);
+  autoResizeAll($(spec.container));
+  calcAll();
+
+  const lista = avisos.slice(0, 12).map(a => '<li>' + esc(a) + '</li>').join('') + (avisos.length > 12 ? '<li>… e mais ' + (avisos.length - 12) + ' aviso(s).</li>' : '');
+  csvMsg(type, '<b>' + dados.length + ' linha(s) importada(s):</b> ' + reaproveitados + ' em card(s) vazio(s) já existente(s) e ' + novos + ' em card(s) novo(s).' +
+    (avisos.length ? ' <b>' + avisos.length + ' aviso(s):</b><ul>' + lista + '</ul>' : ' Nenhum aviso.'), avisos.length ? 'warn' : 'ok');
+  announce(dados.length + ' linhas importadas do CSV.');
+}
+
+/* ---- CSV: modelo para download e painel de orientação ---- */
+function csvCelula(v){ v = String(v == null ? '' : v); return /[;"\r\n]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v; }
+function baixarModeloCSV(type){
+  const spec = CSV_SPECS[type];
+  const linhas = [spec.cols.map(c => c.k)].concat(spec.exemplos.map(ex => spec.cols.map(c => ex[c.k] || '')));
+  const csv = '﻿' + linhas.map(l => l.map(csvCelula).join(';')).join('\r\n') + '\r\n';
+  saveBlobAsFile(new Blob([csv], { type:'text/csv;charset=utf-8' }), spec.arquivo, 'Modelo CSV gerado para download.');
+}
+function csvAcao(type, acao){
+  if(acao === 'template') baixarModeloCSV(type);
+  else if(acao === 'import'){ const f = $('csv-file-' + type); if(f) f.click(); }
+}
+function csvMontarPainel(type){
+  const spec = CSV_SPECS[type], mount = $('csv-mount-' + type);
+  if(!mount) return;
+  const comLista = (t, itens) => '<details class="mt-2"><summary class="text-sm">' + esc(t) + ' (' + itens.length + ')</summary><p class="csv-vals">' + itens.map(esc).join(' · ') + '</p></details>';
+  const aceitos = type === 'rh'
+    ? comLista('Vínculos aceitos', VINCULOS_SUGESTAO) + comLista('Rubricas aceitas', RUBRICAS_RH.map(r => r.label))
+    : comLista('Unidades aceitas', UNIDADES);
+  mount.innerHTML = `
+  <details class="group-panel mt-5">
+    <summary>Importar dados em CSV e duplicar cards — ${esc(spec.titulo)}</summary>
+    <div class="group-panel-body">
+      <p class="field-hint" style="max-width:78ch;">Preencha uma planilha (Excel, LibreOffice ou Google Planilhas), salve como <b>CSV</b> e importe aqui: cada linha da planilha vira um card. Para duplicar um card já preenchido, use o botão <b>Duplicar</b> no topo dele.</p>
+      <ol class="csv-steps">
+        <li>Clique em <b>Baixar modelo CSV (estrutura)</b>: o arquivo traz o cabeçalho com todas as colunas e linhas de exemplo.</li>
+        <li>Abra o modelo na planilha, apague as linhas de exemplo e lance os seus dados, <b>uma linha por card</b>. Mantenha a linha de cabeçalho; a ordem das colunas é livre e você pode omitir as colunas que não for usar.</li>
+        <li>Salve como CSV (UTF-8, separador ponto e vírgula ou vírgula) e clique em <b>Importar CSV…</b>.</li>
+      </ol>
+      <ul class="csv-steps" style="list-style:disc;">
+        <li>As linhas preenchem primeiro os <b>cards vazios</b> já existentes e, acabando eles, novos cards são criados. Cards já preenchidos <b>não são alterados</b>.</li>
+        <li>Valores em reais com vírgula decimal (ex.: <code>3.500,00</code>); quantidades como número. Categoria, unidade${type === 'rh' ? ', vínculo e rubrica' : ''} devem ter o nome exatamente como nas listas abaixo (maiúsculas e acentos não importam).</li>
+        <li>Os totais, o Grupo de despesas${type === 'rh' ? ', o salário líquido e os encargos (FGTS, 13º, férias 1/3)' : ''} são calculados pelo formulário. A importação não substitui o JSON salvo do plano.</li>
+      </ul>
+      <div class="flex gap-2 flex-wrap items-center no-print">
+        <button type="button" class="btn btn-outline btn-sm" data-csv-action="template" data-csv-type="${type}">Baixar modelo CSV (estrutura)</button>
+        <button type="button" class="btn btn-primary btn-sm" data-csv-action="import" data-csv-type="${type}">Importar CSV…</button>
+        <input type="file" id="csv-file-${type}" data-csv-file="${type}" accept=".csv,.txt,text/csv" style="display:none" aria-label="Selecionar arquivo CSV de ${esc(spec.titulo)}">
+      </div>
+      <div class="csv-msg" id="csv-msg-${type}" role="status" aria-live="polite"></div>
+      <details class="mt-3"><summary class="text-sm">Colunas do arquivo (${spec.cols.length})</summary>
+        <table class="csv-cols"><thead><tr><th>Coluna</th><th>Conteúdo</th></tr></thead><tbody>
+          ${spec.cols.map(c => `<tr><td><code>${esc(c.k)}</code></td><td>${esc(c.d)}</td></tr>`).join('')}
+        </tbody></table>
+      </details>
+      ${aceitos}
+      ${type === 'rh' ? '' : ''}${comLista('Categorias de despesas aceitas', spec.categorias)}
+    </div>
+  </details>`;
+}
+document.addEventListener('change', (e) => {
+  const t = e.target;
+  if(t && t.matches && t.matches('input[data-csv-file]')){
+    const f = t.files && t.files[0], tipo = t.dataset.csvFile;
+    t.value = '';
+    if(f) lerArquivoCSV(f, tipo);
+  }
+});
+
 /* ===================== Global click delegation ===================== */
 document.addEventListener('click', (e) => {
+  const dupBtn = e.target.closest('[data-action="duplicate"]');
+  if(dupBtn){ duplicarCard(dupBtn.dataset.dupType, dupBtn.dataset.dupUid); return; }
+  const csvBtn = e.target.closest('[data-csv-action]');
+  if(csvBtn){ csvAcao(csvBtn.dataset.csvType, csvBtn.dataset.csvAction); return; }
   const removeBtn = e.target.closest('[data-action="remove"]');
   if(removeBtn){
     removeItem(removeBtn.dataset.removeType, removeBtn.dataset.removeTarget);
@@ -5329,6 +5637,7 @@ function init(){
   checkDraftOnLoad();
   populateModelosSelect();
 
+  ['impl', 'rh', 'oper'].forEach(csvMontarPainel);
   addMeta(false); addMeta(false);
   addResponsavel('Presidente ou Provedor'); addResponsavel('Responsável Técnico');
   addImplantacao(); addImplantacao();

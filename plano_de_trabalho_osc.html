@@ -202,7 +202,7 @@
   .vt-wrap{ overflow-x:auto; border:1px solid var(--line); border-radius:8px; -webkit-overflow-scrolling:touch; background:#fff; }
   table.vt{ border-collapse:separate; border-spacing:0; width:100%; table-layout:fixed; font-size:.8rem; }
   table.vt.vt-simple{ min-width:114rem; }
-  table.vt.vt-rh{ min-width:114rem; }
+  table.vt.vt-rh{ min-width:128rem; }
   table.vt th, table.vt td{ padding:.4rem .35rem; vertical-align:top; border-bottom:1px solid var(--line); }
   table.vt thead th{ background:var(--ink); color:#fff; font-weight:600; font-size:.7rem; text-align:left; line-height:1.25; }
   table.vt thead th.num, table.vt td.num{ text-align:right; }
@@ -211,7 +211,10 @@
   table.vt .input-money{ font-size:.76rem; padding:.4rem .3rem; }
   table.vt textarea.input{ min-height:2.4rem; max-height:12rem; }
   table.vt col.c-grupo{ width:9rem; } table.vt col.c-cat{ width:13rem; } table.vt col.c-item{ width:12rem; }
-  table.vt col.c-desc{ width:10rem; } table.vt col.c-func{ width:13rem; }
+  table.vt col.c-desc{ width:10rem; } table.vt col.c-func{ width:13rem; } table.vt col.c-rub{ width:14rem; } table.vt col.c-act{ width:11.5rem; }
+  .rh-act{ display:grid; grid-template-columns:1fr 1fr; gap:.3rem; }
+  .rh-act .btn{ white-space:normal; line-height:1.15; padding:.3rem .4rem; font-size:.72rem; }
+  table.vt td.act{ vertical-align:top; }
   table.vt col.c-mes{ width:5.2rem; } table.vt col.c-tot{ width:6.5rem; }
   .vt-total{ display:inline-block; font-family:'Space Mono',monospace; font-weight:700; color:var(--brand-dark); font-size:.78rem; padding-top:.5rem; }
   .vt-actions{ display:flex; flex-wrap:wrap; align-items:center; gap:.5rem; margin-top:.75rem; }
@@ -221,6 +224,49 @@
   .vt-msg{ color:var(--brand-dark); font-weight:600; }
   .vt-rubrica{ margin-top:.75rem; display:grid; gap:.3rem; max-width:34rem; }
   .vt-cathint{ margin-top:.5rem; padding:.4rem .6rem; border-left:3px solid var(--gold); background:#FBF6EA; border-radius:0 4px 4px 0; }
+
+  /* ===================== v7.3 — cards de custo compactos (Seções 8, 9 e 10) =====================
+     Sem tabela: listas de campos com rótulo pequeno e borda finíssima; fluido na tela e no PDF. */
+  .sec-intro{ margin-top:.5rem; width:100%; max-width:none; font-size:.82rem; color:var(--ink-soft); }
+  .cc .input, .cc select.input, .cc textarea.input{ border:1px solid #D3D8DD; border-radius:4px; padding:.28rem .45rem; font-size:.8rem; line-height:1.35; }
+  .cc textarea.input{ min-height:1.9rem; }
+  .cc .input[readonly], .cc .input.readonly{ background:#F4F5F2; border-style:solid; }
+  .cc .input-money{ font-size:.76rem; padding:.28rem .35rem; }
+  .cc .lbl, .lbl{ display:block; font-size:.7rem; font-weight:600; color:var(--ink-soft); line-height:1.2; }
+  .ifield-row{ display:flex; flex-wrap:wrap; gap:.5rem 1.25rem; align-items:center; }
+  .ifield{ display:flex; align-items:center; gap:.4rem; min-width:0; flex:1 1 14rem; }
+  .ifield.w-sm{ flex:0 1 13rem; }
+  .ifield.w-lg{ flex:2 1 22rem; }
+  .ifield > .lbl{ flex:0 0 auto; font-size:.74rem; }
+  .ifield > .input{ flex:1 1 auto; min-width:0; width:auto; }
+  .ifield.ta{ align-items:flex-start; }
+  .lanc-tit{ font-weight:600; font-size:.8rem; color:var(--ink); margin:.9rem 0 .15rem; }
+  .lanc-row{ padding:.55rem 0 .5rem; border-top:1px dotted #C4CAD0; }
+  .lanc-list > .lanc-row:first-child{ border-top:1px solid #C4CAD0; }
+  .lanc-top{ display:grid; grid-template-columns:minmax(6.5rem,.8fr) minmax(10rem,1.3fr) minmax(8rem,1fr) minmax(9rem,1.2fr) 10.5rem; gap:.35rem .6rem; align-items:start; }
+  .lanc-row.rh .lanc-top{ grid-template-columns:minmax(6.5rem,.8fr) minmax(10rem,1.3fr) minmax(8rem,1fr) minmax(11rem,1.3fr) 10.5rem; }
+  .lf{ min-width:0; display:flex; flex-direction:column; gap:.15rem; }
+  .lanc-meses{ display:grid; grid-template-columns:repeat(auto-fill,minmax(5.6rem,1fr)); gap:.35rem .4rem; margin-top:.4rem; }
+  .lanc-meses .input-money{ text-align:right; }
+  .lf-tot{ grid-column:1 / -1; flex-direction:row; align-items:baseline; gap:.5rem; }
+  .lf-tot .vt-total{ padding-top:0; }
+  .lanc-msg:empty, .vt-cathint[hidden]{ display:none; }
+  .lanc-msg{ margin:.3rem 0 0; }
+  .lanc-row .vt-cathint{ margin-top:.35rem; }
+  .vlist{ column-width:22rem; column-gap:2.5rem; margin-top:.2rem; }
+  .vl{ display:grid; grid-template-columns:minmax(0,1fr) 8.5rem; align-items:center; gap:.5rem; padding:.14rem 0; break-inside:avoid; font-size:.8rem; }
+  .vl .vl-l{ display:flex; align-items:center; gap:.35rem; flex-wrap:nowrap; min-width:0; }
+  .vl .vl-l label{ flex:0 1 auto; }
+  .vl.has-esp .vl-l label{ flex:0 0 auto; }
+  .vl .sg{ display:inline-block; min-width:1.8rem; font-family:'Space Mono',monospace; font-weight:700; font-size:.74rem; color:var(--ink-soft); }
+  .vl .esp-in{ flex:1 1 5rem; min-width:4rem; }
+  .vl.eq{ font-weight:700; border-top:1px solid #C4CAD0; margin-top:.25rem; padding-top:.3rem; }
+  .vl.eq .input{ font-weight:700; }
+  .vl-sub{ display:flex; align-items:center; justify-content:space-between; gap:.5rem; flex-wrap:wrap; font-weight:700; font-size:.82rem; color:var(--brand-dark); margin:1rem 0 .1rem; padding-bottom:.2rem; border-bottom:1px solid var(--line); }
+  @media (max-width:980px){
+    .lanc-top, .lanc-row.rh .lanc-top{ grid-template-columns:repeat(2,minmax(0,1fr)); }
+    .lanc-top .lf-act{ grid-column:1 / -1; }
+  }
   .outra-wrap{ margin-top:.5rem; }
   .outra-wrap.hidden{ display:none; }
 
@@ -239,7 +285,7 @@
     table.vt thead, table.vt colgroup{ display:none; }
     table.vt tr{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:.5rem; }
     table.vt td{ border:none; padding:0; text-align:left !important; }
-    table.vt td.txt, table.vt td.tot{ grid-column:1 / -1; }
+    table.vt td.txt, table.vt td.tot, table.vt td.act{ grid-column:1 / -1; }
     table.vt td::before{ content:attr(data-label); display:block; font-size:.68rem; font-weight:600; color:var(--ink-soft); margin-bottom:.15rem; }
     .vt-total{ padding-top:0; }
   }
@@ -432,7 +478,7 @@
     table.vt.vt-simple col.c-grupo{ width:7%; } table.vt.vt-simple col.c-cat{ width:11%; } table.vt.vt-simple col.c-desc{ width:8.6%; }
     table.vt.vt-simple col.c-item{ width:10%; } table.vt.vt-simple col.c-mes{ width:4.7%; } table.vt.vt-simple col.c-tot{ width:7%; }
     table.vt.vt-rh col.c-grupo{ width:7%; } table.vt.vt-rh col.c-cat{ width:11%; } table.vt.vt-rh col.c-desc{ width:8.6%; }
-    table.vt.vt-rh col.c-func{ width:10%; } table.vt.vt-rh col.c-mes{ width:4.7%; } table.vt.vt-rh col.c-tot{ width:7%; }
+    table.vt.vt-rh col.c-func, table.vt.vt-rh col.c-rub{ width:10%; } table.vt.vt-rh col.c-mes{ width:4.7%; } table.vt.vt-rh col.c-tot{ width:7%; }
     /* Valores dos meses: sem moldura nem recuo no espelho (a célula já delimita a coluna), fonte menor e
        alinhados à direita — assim "123.456,78" cabe sem quebrar no meio do número. */
     table.vt td.mes{ border-left:.5px solid #e3e6e1; }
@@ -440,6 +486,7 @@
     .vt-total{ padding-top:1px; font-size:5.2pt; white-space:nowrap; }
     .vt-title{ break-after:avoid; page-break-after:avoid; }
     .vt-actions, .vt-rubrica, .vt-cathint, .vt-status, .vt-msg{ display:none !important; }
+    table.vt .act, table.vt col.c-act{ display:none !important; }
     @media (orientation:portrait){
       table.vt, table.vt.vt-simple, table.vt.vt-rh{ font-size:4.6pt; }
       table.vt thead th{ font-size:4.3pt; }
@@ -447,6 +494,32 @@
       table.vt td.mes .print-mirror{ font-size:4.2pt; }
       .vt-total{ font-size:4.4pt; }
     }
+
+
+    /* v7.3 — cards compactos no PDF: linhas de campos com borda finíssima, sem tabela */
+    .instr.keep-print.sec-intro{ display:block !important; font-size:8.5pt; margin:1.5mm 0 3mm; }
+    .cc .lbl{ font-size:6pt; }
+    .cc .print-mirror{ font-size:7pt; padding:1px 3px; min-height:1.4em; line-height:1.3; border:.5px solid #cfd4cf; border-radius:2px; }
+    .ifield-row{ gap:1.2mm 5mm; }
+    .ifield{ flex:1 1 38mm; } .ifield.w-sm{ flex:0 0 40mm; } .ifield.w-lg{ flex:2 1 80mm; }
+    .ifield .print-mirror{ width:auto; flex:1 1 auto; min-width:14mm; white-space:nowrap; }
+    .vl-l .print-mirror{ width:auto; flex:1 1 22mm; min-width:22mm; }
+    .ifield > .lbl{ font-size:6.5pt; }
+    .lanc-row{ break-inside:avoid; page-break-inside:avoid; padding:1.5mm 0; }
+    .lanc-top, .lanc-row.rh .lanc-top{ grid-template-columns:.8fr 1.3fr 1fr 1.3fr !important; gap:1mm 2mm; }
+    .lanc-top .lf-act{ display:none !important; }
+    .lanc-meses{ grid-template-columns:repeat(13,minmax(0,1fr)) !important; gap:1mm; margin-top:1mm; }
+    .lanc-meses .print-mirror{ font-size:5.4pt; padding:1px 1px; text-align:right; }
+    .lanc-meses .lbl{ font-size:5.2pt; }
+    .lanc-meses .vt-total{ font-size:6pt; padding-top:0; white-space:nowrap; }
+    .lanc-meses .lf-tot{ flex-direction:row; gap:2mm; }
+    .vlist{ column-width:62mm; column-gap:6mm; }
+    .vl{ grid-template-columns:minmax(0,1fr) 27mm; font-size:7pt; padding:.4mm 0; }
+    .vl .sg{ font-size:6.5pt; min-width:6mm; }
+    .vl .esp-in{ min-width:20mm; }
+    .vl-sub{ font-size:7.5pt; margin:2.5mm 0 .5mm; }
+    .lanc-tit{ font-size:8pt; break-after:avoid; page-break-after:avoid; }
+    .vl-sub, .lanc-tit{ break-after:avoid; page-break-after:avoid; }
 
     /* Painéis recolhíveis ficam abertos no PDF */
     details:not([open]) > *:not(summary){ display:block !important; }
@@ -1227,7 +1300,7 @@
         <div class="section-card">
           <p class="section-kicker">Seção 8 · aba "Custo_Implantação"</p>
           <h2 id="h-implantacao" class="font-serif text-2xl mt-3">Custo de implantação</h2>
-          <p class="field-hint mt-2 max-w-[70ch]">Itens de custo único (bens, adequações, aquisições iniciais). O total de cada item é calculado como quantidade × valor unitário. Na tabela de lançamento escolha a categoria (o grupo é preenchido automaticamente), descreva o item e distribua o valor pelos meses — digitando em cada mês ou usando os botões "Copiar do custo da despesa lançada", "Parcela única (Mês 1)" e "Repetir valor do Mês 1".</p>
+          <p class="instr keep-print sec-intro">Itens de custo único (bens, adequações, aquisições iniciais). O total de cada item é calculado como quantidade × valor unitário. Em cada linha de despesa escolha a categoria (o grupo é preenchido automaticamente), descreva o item e distribua o valor pelos meses — digitando em cada mês ou usando o menu "Ação" (Todo o período, Mês 1, Repetir Mês 1 até o Mês X, Remover). Use "Adicionar Item de Despesa" para incluir outras linhas no mesmo card.</p>
 
           <div id="csv-mount-impl" class="no-print"></div>
 
@@ -1247,16 +1320,16 @@
         <div class="section-card">
           <p class="section-kicker">Seção 9 · aba "Custo_RH"</p>
           <h2 id="h-rh" class="font-serif text-2xl mt-3">Custo de recursos humanos</h2>
-          <p class="field-hint mt-2 max-w-[70ch]">
-            Um cartão por função/cargo. Salário líquido, FGTS, 13º, férias (1/3) e seus encargos são calculados automaticamente
-            a partir do salário bruto; o restante dos encargos e benefícios fica em "Benefícios e outras despesas". Para lançar
-            nos meses, escolha a rubrica desejada (só o salário líquido, só o FGTS patronal, o total do cargo…) e use
-            "Copiar do custo da despesa lançada por rubrica", "Parcela única (Mês 1)" ou "Repetir valor do Mês 1"; cada mês
-            continua editável. Só a parcela de 1/3 das férias é provisionada (Férias 1/12 não é lançada).
+          <p class="instr keep-print sec-intro">
+            Um card por função/cargo. O salário bruto (salário base + adicionais), o salário líquido, o FGTS, o 13º e as férias (1/3)
+            com seus encargos são calculados automaticamente; os demais encargos e benefícios são lançados nas listas do card.
+            No "Lançamento mensal por função/cargo e rubrica" cada linha é uma rubrica do mesmo cargo: escolha a rubrica, lance os
+            meses (digitando ou pelo menu "Ação") e use "Adicionar Rubrica" para incluir outras linhas sem duplicar o cargo.
+            Só a parcela de 1/3 das férias é provisionada (Férias 1/12 não é lançada).
           </p>
 
           <datalist id="dl-vinculo-sugestao"></datalist>
-          <p class="field-hint">O campo "Vínculo" abaixo já lista as opções da aba "Instruções" (CLT, voluntário, RPA, contrato, estágio, bolsa, etc.).</p>
+          <p class="field-hint">O campo "Vínculo" já lista as opções da aba "Instruções" (CLT, voluntário, RPA, contrato, estágio, bolsa, etc.).</p>
 
           <div id="csv-mount-rh" class="no-print"></div>
 
@@ -1276,7 +1349,7 @@
         <div class="section-card">
           <p class="section-kicker">Seção 10 · aba "Custo_Operacional"</p>
           <h2 id="h-operacional" class="font-serif text-2xl mt-3">Custo operacional</h2>
-          <p class="field-hint mt-2 max-w-[70ch]">Despesas recorrentes de manutenção e funcionamento. O total mensal de cada item é calculado como valor unitário × quantidade/mês. Na tabela de lançamento escolha a categoria (o grupo é preenchido automaticamente), descreva o item e distribua o valor pelos meses — digitando em cada mês ou usando os botões "Copiar do custo da despesa lançada", "Parcela única (Mês 1)" e "Repetir valor do Mês 1".</p>
+          <p class="instr keep-print sec-intro">Despesas recorrentes de manutenção e funcionamento. O total mensal de cada item é calculado como valor unitário × quantidade/mês. Em cada linha de despesa escolha a categoria (o grupo é preenchido automaticamente), descreva o item e distribua o valor pelos meses — digitando em cada mês ou usando o menu "Ação" (Todo o período, Mês 1, Repetir Mês 1 até o Mês X, Remover). Use "Adicionar Item de Despesa" para incluir outras linhas no mesmo card.</p>
 
           <div id="csv-mount-oper" class="no-print"></div>
 
@@ -1739,8 +1812,12 @@ const OUTRA_ESPECIFICAR = 'Outra, a especificar';
 const RUBRICAS_RH = [
   { key:'__total',       label:'Total do cargo (todas as rubricas)', cat:'' },
   { key:'liquido',       label:'Salário líquido',                    cat:'Salários E Ordenados (Exceto Diretoria)' },
+  { key:'inss',          label:'INSS R$ (retido)',                   cat:'INSS' },
+  { key:'irrf',          label:'IRRF R$',                            cat:'IRRF' },
+  { key:'outrosdesc',    label:'Outros descontos',                   cat:'' },
   { key:'fgts',          label:'FGTS patronal (8%)',                 cat:'FGTS' },
   { key:'insspatronal',  label:'Contribuição INSS patronal',         cat:'Contribuição Ao INSS – Cota Patronal' },
+  { key:'encoutros',     label:'Outros encargos e provisões',        cat:'' },
   { key:'decimo',        label:'13º salário (1/12)',                 cat:'13° Salário' },
   { key:'inss13',        label:'INSS s/13º (1/12)',                  cat:'INSS' },
   { key:'fgts13',        label:'FGTS s/13º (1/12)',                  cat:'FGTS' },
@@ -2437,50 +2514,118 @@ function vtTotalCell(p){
   return `<td class="num tot" data-label="Total R$"><span class="vt-total" id="${p}-totalvig">R$ 0,00</span></td>`;
 }
 
-/* Seções 8 e 10: Grupo / Categoria / Descrição / Item de despesa / Mês 1-12 / Total R$ */
-function custoItemTableHTML(p){
-  return `
-  <div class="vt-wrap">
-    <table class="vt vt-simple">
-      <colgroup><col class="c-grupo"><col class="c-cat"><col class="c-desc"><col class="c-item"><col class="c-mes" span="12"><col class="c-tot"></colgroup>
-      <thead><tr>
-        <th scope="col" class="txt">Grupo de despesas</th>
-        <th scope="col" class="txt">Categoria de despesas</th>
-        <th scope="col" class="txt">Descrição</th>
-        <th scope="col" class="txt">Item de despesa <span aria-hidden="true">*</span></th>
-        ${vtMonthHeadCells()}
-        <th scope="col" class="num tot">Total R$</th>
-      </tr></thead>
-      <tbody><tr>
-        ${vtCell('Grupo de despesas', vtGrupoField(p))}
-        ${vtCell('Categoria de despesas', vtCategoriaField(p, CATEGORIAS_NAO_RH))}
-        ${vtCell('Descrição', `<label class="visually-hidden" for="${p}-descricao">Descrição (obrigatória em categorias Diversos/Outros)</label><textarea class="input vt-item" rows="2" id="${p}-descricao" name="${p}-descricao"></textarea>`)}
-        ${vtCell('Item de despesa', `<label class="visually-hidden" for="${p}-item">Item de despesa</label><textarea class="input vt-item" rows="2" id="${p}-item" name="${p}-item" required></textarea>`)}
-        ${vtMonthCells(p)}
-        ${vtTotalCell(p)}
-      </tr></tbody>
-    </table>
-  </div>
-  <p class="field-hint vt-cathint no-print" id="${p}-cathint" data-cat-hint-for="${p}-categoria" hidden></p>`;
-}
-
+/* v7.3 — Linhas de lançamento (Seções 8, 9 e 10): cada card tem uma ou mais linhas de despesa/rubrica.
+   Linha = Grupo / Categoria / Descrição / Item (ou Rubrica) / Ação  +  Mês 1…12 / Total R$.
+   A linha 1 mantém os ids originais (impl-<uid>-item, …-mes-1…); as demais usam <tipo>-<uid>-r<k>-…
+   O menu "Ação" (sem id: não entra no JSON) preenche os meses como atalho; os 12 campos seguem editáveis. */
+const LANC = {
+  impl: { list:'implantacao-list', kind:'total',   cats:CATEGORIAS_NAO_RH, add:'Adicionar Item de Despesa' },
+  oper: { list:'operacional-list', kind:'monthly', cats:CATEGORIAS_NAO_RH, add:'Adicionar Item de Despesa' },
+  rh:   { list:'rh-list',          kind:'rubrica', cats:CATEGORIAS_RH,     add:'Adicionar Rubrica' }
+};
 const VT_TITULOS = {
   total:   'Divide o total do item (quantidade × valor unitário) em parcelas iguais pelos meses do período de execução (Seção 3); sem período informado, usa 12 meses.',
   monthly: 'Lança o total mensal do item (valor unitário × quantidade/mês) em cada mês do período de execução (Seção 3); sem período informado, usa 12 meses.',
   rubrica: 'Lança o valor mensal da rubrica selecionada (já multiplicado pela quantidade) em cada mês do período de execução (Seção 3); sem período informado, usa 12 meses.'
 };
-/* Os três botões de lançamento mensal (iguais nas Seções 8, 9 e 10). */
-function vtActionsHTML(p, kind, totalField, extraAttrs, withStatus, copyLabel){
-  const base = `data-month-prefix="${p}" data-cost-kind="${kind}" data-total-field="${totalField}" ${extraAttrs || ''}`;
+function lancPf(type, u, k){ return k === 1 ? type + '-' + u : type + '-' + u + '-r' + k; }
+function lancRows(card){ return Array.from(card.querySelectorAll('.lanc-row')); }
+function lancAcaoHTML(type, u, k, pf){
+  const cfg = LANC[type];
+  const tf = type === 'impl' ? 'impl-' + u + '-total' : type === 'oper' ? 'oper-' + u + '-totalmes' : '';
+  const rub = type === 'rh' ? ` data-rh-uid="${u}" data-rub-sel="${pf}-rubrica"` : '';
+  let ops = '<option value="">Escolher…</option>'
+    + '<option value="all">Todo o período</option>'
+    + '<option value="first">Mês 1 (parcela única)</option>';
+  for(let x=2;x<=12;x++) ops += `<option value="rep-${x}">Repetir Mês 1 até Mês ${x}</option>`;
+  if(k > 1) ops += '<option value="del">Remover linha</option>';
+  return `<select class="input lanc-acao" data-lanc-acao aria-label="Ação desta linha (lançar nos meses ou remover)" title="${esc(VT_TITULOS[cfg.kind])}" data-month-prefix="${pf}" data-cost-kind="${cfg.kind}" data-total-field="${tf}"${rub}>${ops}</select>`;
+}
+function lancRowHTML(type, u, k){
+  const cfg = LANC[type], pf = lancPf(type, u, k);
+  const ident = type === 'rh'
+    ? `<div class="lf"><label class="lbl" for="${pf}-rubrica">Rubrica</label><select class="input" id="${pf}-rubrica" name="${pf}-rubrica">${RUBRICAS_RH.map(r => `<option value="${r.key}">${esc(r.label)}</option>`).join('')}</select></div>`
+    : `<div class="lf"><label class="lbl" for="${pf}-item">Item de Despesa <span aria-hidden="true">*</span></label><textarea class="input vt-item" rows="1" id="${pf}-item" name="${pf}-item" required></textarea></div>`;
+  let meses = '';
+  for(let n=1;n<=12;n++){
+    meses += `<div class="lf"><label class="lbl" for="${pf}-mes-${n}">Mês ${n}</label><input class="input input-money money-mask" type="text" inputmode="decimal" id="${pf}-mes-${n}" name="${pf}-mes-${n}" value="0,00"></div>`;
+  }
+  meses += `<div class="lf lf-tot"><span class="lbl">Total R$</span><span class="vt-total" id="${pf}-totalvig">R$ 0,00</span></div>`;
   return `
-  <div class="vt-actions">
-    <button type="button" class="btn btn-outline btn-sm" data-fill-months="copy-cost" ${base} title="${esc(VT_TITULOS[kind])}">${esc(copyLabel)}</button>
-    <button type="button" class="btn btn-outline btn-sm" data-fill-months="first" ${base} title="Lança todo o valor no Mês 1 e zera os demais meses.">Parcela única (Mês 1)</button>
-    <button type="button" class="btn btn-outline btn-sm" data-fill-months="repeat-first" data-month-prefix="${p}" title="Copia o valor que estiver no Mês 1 para os Meses 2 a 12.">Repetir valor do Mês 1</button>
-    <span class="vt-msg no-print" aria-live="polite"></span>
-    ${withStatus ? `<span class="vt-status no-print" id="${p}-fillstatus"></span>` : ''}
+  <div class="lanc-row ${type}" data-pf="${pf}" data-k="${k}" data-type="${type}" data-uid-card="${u}">
+    <div class="lanc-top">
+      <div class="lf"><label class="lbl" for="${pf}-grupo">Grupo de Despesas</label><textarea class="input readonly vt-grupo" rows="1" id="${pf}-grupo" readonly></textarea></div>
+      <div class="lf"><label class="lbl" for="${pf}-categoria">Categoria de Despesas</label><select class="input categoria-select" id="${pf}-categoria" name="${pf}-categoria" data-grupo-for="${pf}-grupo">${categoriaOptionsHTML(cfg.cats)}</select></div>
+      <div class="lf"><label class="lbl" for="${pf}-descricao">Descrição</label><textarea class="input vt-item" rows="1" id="${pf}-descricao" name="${pf}-descricao"></textarea></div>
+      ${ident}
+      <div class="lf lf-act no-print"><label class="lbl">Ação</label>${lancAcaoHTML(type, u, k, pf)}</div>
+    </div>
+    <div class="lanc-meses">${meses}</div>
+    <p class="vt-msg lanc-msg no-print" aria-live="polite"></p>
+    <p class="field-hint vt-cathint no-print" id="${pf}-cathint" data-cat-hint-for="${pf}-categoria" hidden></p>
   </div>`;
 }
+function lancListHTML(type, u, titulo){
+  const cfg = LANC[type], p = type + '-' + u;
+  return `
+    <p class="lanc-tit">${esc(titulo)}</p>
+    <div class="lanc-list" id="${p}-lancs">${lancRowHTML(type, u, 1)}</div>
+    <div class="vt-actions no-print">
+      <button type="button" class="btn btn-outline btn-sm" data-action="lanc-add" data-lanc-type="${type}" data-lanc-uid="${u}" title="Inclui mais uma linha neste mesmo card.">+ ${esc(cfg.add)}</button>
+      ${type === 'impl' ? `<span class="vt-status no-print" id="${p}-fillstatus"></span>` : ''}
+    </div>
+    ${type === 'rh' ? `<p class="vt-status no-print" id="${p}-rubaviso" data-state="warn" role="status"></p>` : ''}`;
+}
+function lancEnsure(type, u, k){
+  const box = $(type + '-' + u + '-lancs');
+  if(!box || k <= 1 || box.querySelector('.lanc-row[data-k="' + k + '"]')) return null;
+  box.insertAdjacentHTML('beforeend', lancRowHTML(type, u, k));
+  const linha = box.querySelector('.lanc-row[data-k="' + k + '"]');
+  autoResizeAll(linha);
+  return linha;
+}
+function lancAdd(type, u){
+  const box = $(type + '-' + u + '-lancs');
+  if(!box) return;
+  const linhas = lancRows(box);
+  if(type === 'rh' && linhas.length >= RUBRICAS_RH.length - 1){ announce('Todas as rubricas já foram incluídas.'); return; }
+  const k = Math.max.apply(null, linhas.map(b => +b.dataset.k)) + 1;
+  const usadas = type === 'rh' ? linhas.map(b => ($(b.dataset.pf + '-rubrica') || {}).value) : [];
+  const linha = lancEnsure(type, u, k);
+  if(!linha) return;
+  let foco = linha.querySelector('select.categoria-select');
+  if(type === 'rh'){
+    // sugere INSS retido, depois IRRF, depois a primeira rubrica ainda livre
+    const ordem = ['inss', 'irrf'].concat(RUBRICAS_RH.map(r => r.key).filter(x => x !== '__total'));
+    const livre = ordem.find(x => usadas.indexOf(x) < 0);
+    const sel = $(linha.dataset.pf + '-rubrica');
+    if(sel && livre) sel.value = livre;
+    foco = sel;
+  }
+  calcAll();
+  if(foco) foco.focus({ preventScroll:true });
+  linha.scrollIntoView({ block:'nearest', behavior:'smooth' });
+  announce(type === 'rh' ? 'Linha de rubrica incluída no mesmo cargo. Escolha a rubrica e lance os valores mensais.' : 'Linha de despesa incluída no mesmo card.');
+}
+function lancDel(type, u, k){
+  const linha = document.querySelector('#' + type + '-' + u + '-lancs .lanc-row[data-k="' + k + '"]');
+  if(!linha || +k <= 1) return;
+  linha.remove();
+  calcAll();
+  announce('Linha removida do card.');
+}
+/* Ação escolhida no menu da linha: o select volta para "Escolher…" depois de executar. */
+function lancAcao(sel){
+  const v = sel.value;
+  sel.value = '';
+  if(!v) return;
+  const row = sel.closest('.lanc-row');
+  if(!row) return;
+  if(v === 'del'){ lancDel(row.dataset.type, row.dataset.uidCard, row.dataset.k); return; }
+  if(v.indexOf('rep-') === 0){ fillRepeat(row.dataset.pf, parseInt(v.slice(4), 10), sel); return; }
+  fillCost(sel, v === 'all' ? 'copy-cost' : 'first');
+}
+
 /* Seção 8: compara a soma dos meses com o custo (quantidade × valor unitário) do item. */
 function updateFillStatus(p, custo, somaMeses){
   const st = $(p + '-fillstatus');
@@ -2491,45 +2636,29 @@ function updateFillStatus(p, custo, somaMeses){
   else { st.textContent = 'Soma dos meses: ' + formatBRL(somaMeses) + ' · Custo do item: ' + formatBRL(custo) + ' · Diferença: ' + formatBRL(somaMeses - custo); st.dataset.state = 'warn'; }
 }
 
+function cardHead(type, u, badge, nomeAria){
+  const p = type + '-' + u;
+  return `
+    <div class="item-card-head">
+      <span class="item-badge">${esc(badge)}</span>
+      <div class="item-card-actions"><button type="button" class="btn btn-outline btn-sm no-print" data-action="duplicate" data-dup-type="${type}" data-dup-uid="${u}" title="Cria uma cópia deste card, com os mesmos dados, logo abaixo dele." aria-label="Duplicar ${nomeAria}">Duplicar</button> <button type="button" class="btn btn-danger-ghost btn-sm" data-action="remove" data-remove-target="${p}" data-remove-type="${type}" aria-label="Remover ${nomeAria}">Remover</button></div>
+    </div>`;
+}
 function buildImplantacaoCard(u){
   const p = 'impl-' + u;
   return `
-  <div class="item-card" id="${p}" data-uid="${u}" data-type="impl">
-    <div class="item-card-head">
-      <span class="item-badge">Item</span>
-      <div class="item-card-actions"><button type="button" class="btn btn-outline btn-sm no-print" data-action="duplicate" data-dup-type="impl" data-dup-uid="${u}" title="Cria uma cópia deste card, com os mesmos dados, logo abaixo dele." aria-label="Duplicar este item de implantação">Duplicar</button> <button type="button" class="btn btn-danger-ghost btn-sm" data-action="remove" data-remove-target="${p}" data-remove-type="impl" aria-label="Remover este item de implantação">Remover</button></div>
+  <div class="item-card cc" id="${p}" data-uid="${u}" data-type="impl">
+    ${cardHead('impl', u, 'Item', 'este item de implantação')}
+    <div class="ifield-row">
+      <div class="ifield w-lg"><label class="lbl" for="${p}-meta">Meta Vinculada:</label><select class="input meta-vinculada-select" id="${p}-meta" name="${p}-meta"><option value="">— selecione —</option></select></div>
+      <div class="ifield"><label class="lbl" for="${p}-unidade">Unidade:</label><select class="input" id="${p}-unidade" name="${p}-unidade">${unidadeOptionsHTML()}</select></div>
+      <div class="ifield w-sm"><label class="lbl" for="${p}-quantidade">Quantidade:</label><input class="input" type="number" step="0.01" min="0" id="${p}-quantidade" name="${p}-quantidade" value="0"></div>
+      <div class="ifield w-sm"><label class="lbl" for="${p}-valorunit">Valor unitário R$:</label><input class="input input-money money-mask" type="text" inputmode="decimal" id="${p}-valorunit" name="${p}-valorunit" value="0,00"></div>
+      <div class="ifield"><label class="lbl" for="${p}-total">Total R$ (qtd. × valor):</label><input class="input readonly input-money" type="text" id="${p}-total" readonly value="R$ 0,00"></div>
     </div>
-    <div class="grid sm:grid-cols-2 lg:grid-cols-5 gap-4">
-      <div>
-        <label class="field-label" for="${p}-meta">Meta vinculada</label>
-        <select class="input meta-vinculada-select" id="${p}-meta" name="${p}-meta"><option value="">— selecione —</option></select>
-      </div>
-      <div>
-        <label class="field-label" for="${p}-unidade">Unidade</label>
-        <select class="input" id="${p}-unidade" name="${p}-unidade">${unidadeOptionsHTML()}</select>
-      </div>
-      <div>
-        <label class="field-label" for="${p}-quantidade">Quantidade</label>
-        <input class="input" type="number" step="0.01" min="0" id="${p}-quantidade" name="${p}-quantidade" value="0">
-      </div>
-      <div>
-        <label class="field-label" for="${p}-valorunit">Valor unitário R$</label>
-        <input class="input input-money money-mask" type="text" inputmode="decimal" id="${p}-valorunit" name="${p}-valorunit" value="0,00">
-      </div>
-      <div>
-        <label class="field-label" for="${p}-total">Total R$ (qtd. × valor)</label>
-        <input class="input readonly input-money" type="text" id="${p}-total" readonly value="R$ 0,00">
-      </div>
-    </div>
-
-    <div class="mt-5">
-      <p class="vt-title">Lançamento mensal (R$)</p>
-      ${custoItemTableHTML(p)}
-      ${vtActionsHTML(p, 'total', p + '-total', '', true, 'Copiar do custo da despesa lançada')}
-    </div>
-
-    <div class="mt-4">
-      <label class="field-label" for="${p}-memoria">Memória de cálculo / justificativa da necessidade</label>
+    ${lancListHTML('impl', u, 'Lançamento mensal (R$)')}
+    <div class="mt-3">
+      <label class="lbl" for="${p}-memoria">Memória de cálculo e justificativa / critério de rateio</label>
       <textarea class="input" id="${p}-memoria" name="${p}-memoria" rows="2"></textarea>
     </div>
   </div>`;
@@ -2538,213 +2667,108 @@ function buildImplantacaoCard(u){
 function buildOperacionalCard(u){
   const p = 'oper-' + u;
   return `
-  <div class="item-card" id="${p}" data-uid="${u}" data-type="oper">
-    <div class="item-card-head">
-      <span class="item-badge">Item</span>
-      <div class="item-card-actions"><button type="button" class="btn btn-outline btn-sm no-print" data-action="duplicate" data-dup-type="oper" data-dup-uid="${u}" title="Cria uma cópia deste card, com os mesmos dados, logo abaixo dele." aria-label="Duplicar este item operacional">Duplicar</button> <button type="button" class="btn btn-danger-ghost btn-sm" data-action="remove" data-remove-target="${p}" data-remove-type="oper" aria-label="Remover este item operacional">Remover</button></div>
+  <div class="item-card cc" id="${p}" data-uid="${u}" data-type="oper">
+    ${cardHead('oper', u, 'Item', 'este item operacional')}
+    <div class="ifield-row">
+      <div class="ifield w-lg"><label class="lbl" for="${p}-meta">Meta Vinculada:</label><select class="input meta-vinculada-select" id="${p}-meta" name="${p}-meta"><option value="">— selecione —</option></select></div>
+      <div class="ifield"><label class="lbl" for="${p}-unidade">Unidade:</label><select class="input" id="${p}-unidade" name="${p}-unidade">${unidadeOptionsHTML()}</select></div>
+      <div class="ifield w-sm"><label class="lbl" for="${p}-valorunit">Valor unitário R$:</label><input class="input input-money money-mask" type="text" inputmode="decimal" id="${p}-valorunit" name="${p}-valorunit" value="0,00"></div>
+      <div class="ifield w-sm"><label class="lbl" for="${p}-qtdmes">Quantidade/mês:</label><input class="input" type="number" step="0.01" min="0" id="${p}-qtdmes" name="${p}-qtdmes" value="0"></div>
+      <div class="ifield"><label class="lbl" for="${p}-totalmes">Total R$/mês (valor × qtd.):</label><input class="input readonly input-money" type="text" id="${p}-totalmes" readonly value="R$ 0,00"></div>
     </div>
-    <div class="grid sm:grid-cols-2 lg:grid-cols-5 gap-4">
-      <div>
-        <label class="field-label" for="${p}-meta">Meta vinculada</label>
-        <select class="input meta-vinculada-select" id="${p}-meta" name="${p}-meta"><option value="">— selecione —</option></select>
-      </div>
-      <div>
-        <label class="field-label" for="${p}-unidade">Unidade</label>
-        <select class="input" id="${p}-unidade" name="${p}-unidade">${unidadeOptionsHTML()}</select>
-      </div>
-      <div>
-        <label class="field-label" for="${p}-valorunit">Valor unitário R$</label>
-        <input class="input input-money money-mask" type="text" inputmode="decimal" id="${p}-valorunit" name="${p}-valorunit" value="0,00">
-      </div>
-      <div>
-        <label class="field-label" for="${p}-qtdmes">Quantidade/mês</label>
-        <input class="input" type="number" step="0.01" min="0" id="${p}-qtdmes" name="${p}-qtdmes" value="0">
-      </div>
-      <div>
-        <label class="field-label" for="${p}-totalmes">Total R$/mês (valor × qtd.)</label>
-        <input class="input readonly input-money" type="text" id="${p}-totalmes" readonly value="R$ 0,00">
-      </div>
-    </div>
-
-    <div class="mt-5">
-      <p class="vt-title">Lançamento mensal (R$)</p>
-      ${custoItemTableHTML(p)}
-      ${vtActionsHTML(p, 'monthly', p + '-totalmes', '', false, 'Copiar do custo da despesa lançada')}
-    </div>
-
-    <div class="mt-4">
-      <label class="field-label" for="${p}-memoria">Memória de cálculo e justificativa / critério de rateio</label>
+    ${lancListHTML('oper', u, 'Lançamento mensal (R$)')}
+    <div class="mt-3">
+      <label class="lbl" for="${p}-memoria">Memória de cálculo e justificativa / critério de rateio</label>
       <textarea class="input" id="${p}-memoria" name="${p}-memoria" rows="2"></textarea>
     </div>
   </div>`;
 }
 
-function rhEncargoField(u, key, label){
-  // Campo editável + "companheiro" oculto que guarda se o usuário já sobrescreveu o valor
-  // sugerido (ver encargoValue() em calcAll). O campo oculto viaja no JSON/rascunho/import
-  // normalmente, por ser só mais um input com id — sem nenhum código extra de persistência.
-  return `<div>
-    <label class="field-label" for="rh-${u}-${key}">${esc(label)}</label>
-    <input class="input input-money money-mask rh-encargo" type="text" inputmode="decimal" id="rh-${u}-${key}" name="rh-${u}-${key}" value="0,00">
-    <input type="hidden" id="rh-${u}-${key}-touched" name="rh-${u}-${key}-touched" value="">
-  </div>`;
-}
-function rhBeneficioField(u, key, label){
-  return `<div>
-    <label class="field-label" for="rh-${u}-${key}">${esc(label)}</label>
-    <input class="input input-money money-mask" type="text" inputmode="decimal" id="rh-${u}-${key}" name="rh-${u}-${key}" value="0,00">
-  </div>`;
-}
-
-/* Seção 9: Grupo / Categoria / Descrição / Função-cargo-CH semanal-especificação / Mês 1-12 / Total */
-function rhTableHTML(u){
-  const p = 'rh-' + u;
-  return `
-  <div class="vt-wrap">
-    <table class="vt vt-rh">
-      <colgroup><col class="c-grupo"><col class="c-cat"><col class="c-desc"><col class="c-func"><col class="c-mes" span="12"><col class="c-tot"></colgroup>
-      <thead><tr>
-        <th scope="col" class="txt">Grupo de despesas</th>
-        <th scope="col" class="txt">Categoria de despesas</th>
-        <th scope="col" class="txt">Descrição</th>
-        <th scope="col" class="txt">Função-cargo / CH semanal / especificação <span aria-hidden="true">*</span></th>
-        ${vtMonthHeadCells()}
-        <th scope="col" class="num tot">Total R$</th>
-      </tr></thead>
-      <tbody><tr>
-        ${vtCell('Grupo de despesas', vtGrupoField(p))}
-        ${vtCell('Categoria de despesas', vtCategoriaField(p, CATEGORIAS_RH))}
-        ${vtCell('Descrição', `<label class="visually-hidden" for="${p}-descricao">Descrição (se Diversos/Outros)</label><textarea class="input vt-item" rows="2" id="${p}-descricao" name="${p}-descricao"></textarea>`)}
-        ${vtCell('Função-cargo / CH semanal / especificação', `<label class="visually-hidden" for="${p}-funcao">Função-cargo / CH semanal / especificação</label><textarea class="input vt-item" rows="2" id="${p}-funcao" name="${p}-funcao" required></textarea>`)}
-        ${vtMonthCells(p)}
-        ${vtTotalCell(p)}
-      </tr></tbody>
-    </table>
-  </div>`;
+/* Linha da lista vertical do RH: sinal + rótulo + campo em R$. As linhas "encargo" guardam, em campo oculto,
+   se o usuário já sobrescreveu o valor sugerido (ver encargoValue() em calcAll); o campo oculto viaja no JSON
+   normalmente, por ser só mais um input com id. */
+function rhLinha(u, key, sinal, label, opt){
+  opt = opt || {};
+  const id = 'rh-' + u + '-' + key;
+  const esp = opt.esp ? `<input class="input esp-in" type="text" id="rh-${u}-${opt.esp}" name="rh-${u}-${opt.esp}" placeholder="Especificar" aria-label="${esc(label)} — especificar">` : '';
+  const campo = opt.ro
+    ? `<input class="input readonly input-money" type="text" id="${id}" name="${id}" readonly value="R$ 0,00">`
+    : `<input class="input input-money money-mask${opt.enc ? ' rh-encargo' : ''}" type="text" inputmode="decimal" id="${id}" name="${id}" value="0,00">${opt.enc ? `<input type="hidden" id="${id}-touched" name="${id}-touched" value="">` : ''}`;
+  return `<div class="vl${opt.eq ? ' eq' : ''}${opt.esp ? ' has-esp' : ''}"><div class="vl-l"><span class="sg">${esc(sinal)}</span><label for="${id}">${esc(label)}</label>${esp}</div>${campo}</div>`;
 }
 
 function buildRHCard(u){
   const p = 'rh-' + u;
+  const L = (k, s, l, o) => rhLinha(u, k, s, l, o);
   return `
-  <div class="item-card" id="${p}" data-uid="${u}" data-type="rh">
-    <div class="item-card-head">
-      <span class="item-badge">Função/cargo</span>
-      <div class="item-card-actions"><button type="button" class="btn btn-outline btn-sm no-print" data-action="duplicate" data-dup-type="rh" data-dup-uid="${u}" title="Cria uma cópia deste card, com os mesmos dados, logo abaixo dele." aria-label="Duplicar esta função/cargo">Duplicar</button> <button type="button" class="btn btn-danger-ghost btn-sm" data-action="remove" data-remove-target="${p}" data-remove-type="rh" aria-label="Remover esta função/cargo">Remover</button></div>
+  <div class="item-card cc" id="${p}" data-uid="${u}" data-type="rh">
+    ${cardHead('rh', u, 'Função/cargo', 'esta função/cargo')}
+
+    <div class="ifield-row">
+      <div class="ifield w-lg"><label class="lbl" for="${p}-meta">Meta Vinculada</label><select class="input meta-vinculada-select" id="${p}-meta" name="${p}-meta"><option value="">— selecione —</option></select></div>
+      <div class="ifield ta w-lg"><label class="lbl" for="${p}-funcao">Função-cargo / CH semanal / Especificação <span aria-hidden="true" style="color:var(--danger)">*</span></label><textarea class="input" id="${p}-funcao" name="${p}-funcao" rows="1" required placeholder="Ex.: Educador social — 40h semanais"></textarea></div>
+    </div>
+    <div class="ifield-row" style="margin-top:.45rem">
+      <div class="ifield w-lg"><label class="lbl" for="${p}-vinculo">Vínculo</label><select class="input" id="${p}-vinculo" name="${p}-vinculo"><option value="" selected>Selecione</option>${VINCULOS_SUGESTAO.map(v => `<option>${esc(v)}</option>`).join('')}</select></div>
+      <div class="ifield w-sm"><label class="lbl" for="${p}-quantidade">Quantidade</label><input class="input" type="number" step="1" min="0" id="${p}-quantidade" name="${p}-quantidade" value="1"></div>
     </div>
 
-    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-      <div>
-        <label class="field-label" for="${p}-meta">Meta vinculada</label>
-        <select class="input meta-vinculada-select" id="${p}-meta" name="${p}-meta"><option value="">— selecione —</option></select>
-      </div>
-      <div>
-        <label class="field-label" for="${p}-quantidade">Quantidade</label>
-        <input class="input" type="number" step="1" min="0" id="${p}-quantidade" name="${p}-quantidade" value="1">
-      </div>
-      <div>
-        <label class="field-label" for="${p}-vinculo">Vínculo</label>
-        <select class="input" id="${p}-vinculo" name="${p}-vinculo">
-          <option value="" selected>Selecione</option>
-          ${VINCULOS_SUGESTAO.map(v => `<option>${esc(v)}</option>`).join('')}
-        </select>
-      </div>
+    <div class="vlist" style="margin-top:.7rem">
+      ${L('sbase','','Salário base R$')}
+      ${L('he','(+)','Horas Extras')}
+      ${L('dsr','(+)','DSR s/Horas Extras')}
+      ${L('adnot','(+)','Adicional Noturno')}
+      ${L('dsrnot','(+)','DSR/Adicional Noturno')}
+      ${L('comissoes','(+)','Comissões, gratificações e prêmios/bônus (natureza salarial)')}
+      ${L('outroadic','(+)','Outros adicionais R$',{esp:'outroadicesp'})}
+      ${L('bruto','(=)','Salário bruto (Base + Adicionais)',{ro:true,eq:true})}
+      ${L('inss','(-)','INSS (retido)')}
+      ${L('irrf','(-)','IRRF')}
+      ${L('outrosdesc','(-)','Outros descontos')}
+      ${L('salfamilia','(+)','Salário família')}
+      ${L('liquido','(=)','Salário líquido',{ro:true,eq:true})}
     </div>
 
-    <div class="grid sm:grid-cols-2 lg:grid-cols-5 gap-4 mt-4">
-      <div>
-        <label class="field-label" for="${p}-bruto">Salário bruto R$</label>
-        <input class="input input-money money-mask" type="text" inputmode="decimal" id="${p}-bruto" name="${p}-bruto" value="0,00">
-      </div>
-      <div>
-        <label class="field-label" for="${p}-inss">INSS R$ (retido)</label>
-        <input class="input input-money money-mask" type="text" inputmode="decimal" id="${p}-inss" name="${p}-inss" value="0,00">
-      </div>
-      <div>
-        <label class="field-label" for="${p}-irrf">IRRF R$</label>
-        <input class="input input-money money-mask" type="text" inputmode="decimal" id="${p}-irrf" name="${p}-irrf" value="0,00">
-      </div>
-      <div>
-        <label class="field-label" for="${p}-salfamilia">Salário família R$</label>
-        <input class="input input-money money-mask" type="text" inputmode="decimal" id="${p}-salfamilia" name="${p}-salfamilia" value="0,00">
-      </div>
-      <div>
-        <label class="field-label" for="${p}-liquido">Salário líquido R$</label>
-        <input class="input readonly input-money" type="text" id="${p}-liquido" readonly value="R$ 0,00">
-      </div>
+    <div class="vl-sub"><span>Encargos patronais e provisões</span><button type="button" class="btn btn-outline btn-sm no-print" data-action="reset-encargos" data-rh-uid="${u}" title="Os campos com borda dourada foram editados manualmente e deixam de ser recalculados; este botão devolve todos ao cálculo automático.">Recalcular automaticamente</button></div>
+    <div class="vlist">
+      ${L('fgts','(+)','FGTS patronal (8%)',{enc:true})}
+      ${L('insspatronal','(+)','Contribuição INSS patronal')}
+      ${L('decimo','(+)','13º salário (1/12)',{enc:true})}
+      ${L('inss13','(+)','INSS s/13º (1/12)',{enc:true})}
+      ${L('fgts13','(+)','FGTS s/13º (1/12)',{enc:true})}
+      ${L('feriasterco','(+)','Férias (1/3)',{enc:true})}
+      ${L('fgtsferias','(+)','FGTS s/férias (1/3)',{enc:true})}
+      ${L('inssferias','(+)','INSS s/férias (1/3)')}
+      ${L('irrfferias','(+)','IRRF s/férias (1/3)')}
+      ${L('encoutros','(+)','Outros encargos R$',{esp:'encoutrosesp'})}
     </div>
 
-    <details class="group-panel mt-4" open>
-      <summary>Encargos patronais e provisões</summary>
-      <div class="group-panel-body">
-        <div class="flex items-start justify-between gap-3 flex-wrap mb-3">
-          <p class="field-hint" style="margin:0;max-width:60ch;">
-            Os campos abaixo vêm sugeridos automaticamente a partir do salário bruto, mas são editáveis: lance apenas
-            o(s) encargo(s) que fizer(em) sentido para este cargo. Ao editar um campo manualmente ele deixa de ser
-            recalculado (borda dourada); o total soma o que estiver em cada campo, automático ou manual.
-          </p>
-          <button type="button" class="btn btn-outline btn-sm" data-action="reset-encargos" data-rh-uid="${u}">Recalcular automaticamente</button>
-        </div>
-        <div class="grid sm:grid-cols-2 lg:grid-cols-5 gap-4">
-          ${rhEncargoField(u,'fgts','FGTS patronal R$ (8%)')}
-          <div>
-            <label class="field-label" for="${p}-insspatronal">Contribuição INSS patronal R$</label>
-            <input class="input input-money money-mask" type="text" inputmode="decimal" id="${p}-insspatronal" name="${p}-insspatronal" value="0,00">
-          </div>
-          ${rhEncargoField(u,'decimo','13º salário R$ (1/12)')}
-          ${rhEncargoField(u,'inss13','INSS s/13º R$ (1/12)')}
-          ${rhEncargoField(u,'fgts13','FGTS s/13º R$ (1/12)')}
-          ${rhEncargoField(u,'feriasterco','Férias R$ (1/3)')}
-          ${rhEncargoField(u,'fgtsferias','FGTS s/férias R$ (1/3)')}
-          <div>
-            <label class="field-label" for="${p}-inssferias">INSS s/férias R$ (1/3)</label>
-            <input class="input input-money money-mask" type="text" inputmode="decimal" id="${p}-inssferias" name="${p}-inssferias" value="0,00">
-          </div>
-          <div>
-            <label class="field-label" for="${p}-irrfferias">IRRF s/férias R$ (1/3)</label>
-            <input class="input input-money money-mask" type="text" inputmode="decimal" id="${p}-irrfferias" name="${p}-irrfferias" value="0,00">
-          </div>
-        </div>
-      </div>
-    </details>
+    <div class="vl-sub"><span>Benefícios e outras despesas (opcional)</span></div>
+    <div class="vlist">
+      ${L('indenizacoes','(+)','Indenizações')}
+      ${L('multa','(+)','Multa rescisória FGTS')}
+      ${L('aviso','(+)','Aviso prévio')}
+      ${L('assistmedica','(+)','Assistência médica')}
+      ${L('assistodonto','(+)','Assistência odontológica')}
+      ${L('valealim','(+)','Vale alimentação')}
+      ${L('valerefeicao','(+)','Vale refeição')}
+      ${L('valetransp','(+)','Vale transporte')}
+      ${L('seguros','(+)','Seguros')}
+      ${L('pis','(+)','Contribuição do PIS')}
+      ${L('gratificacoes','(+)','Gratificações')}
+      ${L('outras','(+)','Outras despesas de RH R$',{esp:'outrasesp'})}
+    </div>
+    <p class="field-hint" style="margin:.5rem 0 0;">Os encargos com marcação automática vêm sugeridos a partir do salário bruto, mas são editáveis; ao editar um campo manualmente ele deixa de ser recalculado (borda dourada). O total soma o que estiver em cada campo, automático ou manual.</p>
 
-    <details class="group-panel mt-3">
-      <summary>Benefícios e outras despesas (opcional)</summary>
-      <div class="group-panel-body grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        ${rhBeneficioField(u,'indenizacoes','Indenizações R$')}
-        ${rhBeneficioField(u,'multa','Multa rescisória FGTS R$')}
-        ${rhBeneficioField(u,'aviso','Aviso prévio R$')}
-        ${rhBeneficioField(u,'assistmedica','Assistência médica R$')}
-        ${rhBeneficioField(u,'assistodonto','Assistência odontológica R$')}
-        ${rhBeneficioField(u,'valealim','Vale alimentação R$')}
-        ${rhBeneficioField(u,'valerefeicao','Vale refeição R$')}
-        ${rhBeneficioField(u,'valetransp','Vale transporte R$')}
-        ${rhBeneficioField(u,'seguros','Seguros R$')}
-        ${rhBeneficioField(u,'pis','Contribuição do PIS R$')}
-        ${rhBeneficioField(u,'gratificacoes','Gratificações R$')}
-        ${rhBeneficioField(u,'outras','Outras despesas de RH R$')}
-      </div>
-    </details>
-
-    <div class="total-line mt-4">
-      <span class="label">Total R$/mês (todos os encargos × quantidade)</span>
+    <div class="total-line mt-3">
+      <span class="label">Total R$/mês (Salário líquido + Encargos e Benefícios × Quantidade)</span>
       <span class="amount" id="${p}-totalmes">R$ 0,00</span>
     </div>
 
-    <div class="mt-5">
-      <p class="vt-title">Lançamento mensal por função/cargo e rubrica (R$)</p>
-      ${rhTableHTML(u)}
-      <div class="vt-rubrica no-print">
-        <label class="field-label" for="${p}-rubrica">Rubrica a lançar na tabela (menu de rubricas)</label>
-        <select class="input" id="${p}-rubrica" name="${p}-rubrica">
-          ${RUBRICAS_RH.map(r => `<option value="${r.key}">${esc(r.label)}</option>`).join('')}
-        </select>
-        <p class="field-hint" style="margin:0;">Escolha qual rubrica (ex.: só o salário líquido, só o FGTS patronal) vai para a tabela; os três botões abaixo usam a rubrica selecionada. Os campos de cada mês continuam editáveis.</p>
-      </div>
-      ${vtActionsHTML(p, 'rubrica', '', `data-rh-uid="${u}"`, false, 'Copiar do custo da despesa lançada por rubrica')}
-    </div>
+    ${lancListHTML('rh', u, 'Lançamento mensal por função/cargo e rubrica (R$)')}
 
-    <div class="mt-4">
-      <label class="field-label" for="${p}-memoria">Memória de cálculo e justificativa / critério de rateio</label>
+    <div class="mt-3">
+      <label class="lbl" for="${p}-memoria">Memória de cálculo e justificativa / critério de rateio</label>
       <textarea class="input" id="${p}-memoria" name="${p}-memoria" rows="2"></textarea>
     </div>
   </div>`;
@@ -3085,18 +3109,23 @@ function calcAll(){
     const valor = numMoney('impl-' + u + '-valorunit');
     const total = qtd * valor;
     setMoney('impl-' + u + '-total', total);
-    let sumMeses = 0;
-    const meses = [];
-    for(let n=1;n<=12;n++){
-      const mv = numMoney('impl-' + u + '-mes-' + n);
-      meses.push(mv);
-      sumMeses += mv;
-      implMonthSums[n-1] += mv;
-    }
-    setMoney('impl-' + u + '-totalvig', sumMeses);
-    updateFillStatus('impl-' + u, total, sumMeses);
-    implGrandTotal += sumMeses;
-    lastImplItems.push({ grupo: val('impl-' + u + '-grupo'), categoria: val('impl-' + u + '-categoria'), descricao: val('impl-' + u + '-descricao'), meses: meses });
+    let somaCard = 0;
+    lancRows(card).forEach(row => {
+      const pf = row.dataset.pf;
+      let sumMeses = 0;
+      const meses = [];
+      for(let n=1;n<=12;n++){
+        const mv = numMoney(pf + '-mes-' + n);
+        meses.push(mv);
+        sumMeses += mv;
+        implMonthSums[n-1] += mv;
+      }
+      setMoney(pf + '-totalvig', sumMeses);
+      somaCard += sumMeses;
+      implGrandTotal += sumMeses;
+      lastImplItems.push({ grupo: val(pf + '-grupo'), categoria: val(pf + '-categoria'), descricao: val(pf + '-descricao'), meses: meses });
+    });
+    updateFillStatus('impl-' + u, total, somaCard);
   });
   for(let n=1;n<=12;n++) setMoney('impl-total-mes-' + n, implMonthSums[n-1]);
   setMoney('impl-total-total', implGrandTotal);
@@ -3114,17 +3143,20 @@ function calcAll(){
     const qtdMes = num('oper-' + u + '-qtdmes');
     const totalMes = valor * qtdMes;
     setMoney('oper-' + u + '-totalmes', totalMes);
-    let sumMeses = 0;
-    const meses = [];
-    for(let n=1;n<=12;n++){
-      const mv = numMoney('oper-' + u + '-mes-' + n);
-      meses.push(mv);
-      sumMeses += mv;
-      operMonthSums[n-1] += mv;
-    }
-    setMoney('oper-' + u + '-totalvig', sumMeses);
-    operGrandTotal += sumMeses;
-    lastOperItems.push({ grupo: val('oper-' + u + '-grupo'), categoria: val('oper-' + u + '-categoria'), descricao: val('oper-' + u + '-descricao'), meses: meses });
+    lancRows(card).forEach(row => {
+      const pf = row.dataset.pf;
+      let sumMeses = 0;
+      const meses = [];
+      for(let n=1;n<=12;n++){
+        const mv = numMoney(pf + '-mes-' + n);
+        meses.push(mv);
+        sumMeses += mv;
+        operMonthSums[n-1] += mv;
+      }
+      setMoney(pf + '-totalvig', sumMeses);
+      operGrandTotal += sumMeses;
+      lastOperItems.push({ grupo: val(pf + '-grupo'), categoria: val(pf + '-categoria'), descricao: val(pf + '-descricao'), meses: meses });
+    });
   });
   for(let n=1;n<=12;n++) setMoney('oper-total-mes-' + n, operMonthSums[n-1]);
   setMoney('oper-total-total', operGrandTotal);
@@ -3140,8 +3172,11 @@ function calcAll(){
   document.querySelectorAll('#rh-list .item-card').forEach(card => {
     const u = card.dataset.uid;
     const g = (key) => numMoney('rh-' + u + '-' + key);
-    const bruto = g('bruto'), inss = g('inss'), irrf = g('irrf'), salFamilia = g('salfamilia');
-    const liquido = bruto - inss - irrf + salFamilia;
+    // Salário bruto = salário base + adicionais (horas extras, adicional noturno, outros adicionais, DSR, comissões…)
+    const bruto = g('sbase') + g('he') + g('dsr') + g('adnot') + g('dsrnot') + g('comissoes') + g('outroadic');
+    setMoney('rh-' + u + '-bruto', bruto);
+    const inss = g('inss'), irrf = g('irrf'), outrosDesc = g('outrosdesc'), salFamilia = g('salfamilia');
+    const liquido = bruto - inss - irrf - outrosDesc + salFamilia;
     setMoney('rh-' + u + '-liquido', liquido);
     const fgts = encargoValue('rh-' + u + '-fgts', bruto * 0.08);
     const inssPatronal = g('insspatronal');
@@ -3153,41 +3188,56 @@ function calcAll(){
     const fgtsFerias = encargoValue('rh-' + u + '-fgtsferias', fgts / 36);
     const inssFerias = g('inssferias');
     const irrfFerias = g('irrfferias');
+    const encOutros = g('encoutros');
     const indenizacoes = g('indenizacoes'), multa = g('multa'), aviso = g('aviso'),
           assistMedica = g('assistmedica'), assistOdonto = g('assistodonto'),
           valeAlim = g('valealim'), valeRef = g('valerefeicao'), valeTransp = g('valetransp'),
           seguros = g('seguros'), pis = g('pis'), gratificacoes = g('gratificacoes'), outras = g('outras');
     const quantidade = num('rh-' + u + '-quantidade') || 0;
-    const somaComponentes = liquido + fgts + inssPatronal + decimo + inss13 + fgts13 + feriasTerco +
+    const somaComponentes = liquido + inss + irrf + outrosDesc + encOutros + fgts + inssPatronal + decimo + inss13 + fgts13 + feriasTerco +
       fgtsFerias + inssFerias + irrfFerias + indenizacoes + multa + aviso + assistMedica + assistOdonto +
       valeAlim + valeRef + valeTransp + seguros + pis + gratificacoes + outras;
     const totalMes = somaComponentes * quantidade;
     setMoney('rh-' + u + '-totalmes', totalMes);
 
     // Valor mensal de cada rubrica (× quantidade): alimenta o seletor "Rubrica a lançar nos meses"
-    const rubBase = { liquido, fgts, insspatronal:inssPatronal, decimo, inss13, fgts13, feriasterco:feriasTerco,
+    const rubBase = { liquido, inss, irrf, outrosdesc:outrosDesc, encoutros:encOutros, fgts, insspatronal:inssPatronal, decimo, inss13, fgts13, feriasterco:feriasTerco,
       fgtsferias:fgtsFerias, inssferias:inssFerias, irrfferias:irrfFerias, indenizacoes, multa, aviso,
       assistmedica:assistMedica, assistodonto:assistOdonto, valealim:valeAlim, valerefeicao:valeRef,
       valetransp:valeTransp, seguros, pis, gratificacoes, outras };
     const rub = { __total: totalMes };
     RUBRICAS_RH.forEach(r => { if(r.key !== '__total') rub[r.key] = (rubBase[r.key] || 0) * quantidade; });
     rhRubricas[u] = rub;
-    const rubSel = $('rh-' + u + '-rubrica');
-    if(rubSel) Array.from(rubSel.options).forEach(o => {
-      const r = RUBRICAS_RH.find(x => x.key === o.value);
-      if(r) o.textContent = r.label + ' — ' + formatBRL(rub[r.key] || 0);
+    // Um bloco de lançamento por rubrica (o primeiro tem os ids originais; os demais, o prefixo rh-<uid>-r<k>-)
+    const blocos = lancRows(card);
+    const selects = blocos.map(b => $(b.dataset.pf + '-rubrica'));
+    const usadas = selects.map(s => s ? s.value : '');
+    blocos.forEach((b, bi) => {
+      const pf = b.dataset.pf, sel = selects[bi];
+      if(sel) Array.from(sel.options).forEach(o => {
+        const r = RUBRICAS_RH.find(x => x.key === o.value);
+        if(r) o.textContent = r.label + ' — ' + formatBRL(rub[r.key] || 0);
+        // uma rubrica só pode ser escolhida uma vez por função/cargo; "Total do cargo" não convive com rubricas individuais
+        const repetida = usadas.some((v, j) => j !== bi && v === o.value);
+        o.disabled = (repetida || (o.value === '__total' && blocos.length > 1)) && o.value !== sel.value;
+      });
+      let sumMeses = 0;
+      const meses = [];
+      for(let n=1;n<=12;n++){
+        const mv = numMoney(pf + '-mes-' + n);
+        meses.push(mv);
+        sumMeses += mv;
+        rhMonthSums[n-1] += mv;
+      }
+      setMoney(pf + '-totalvig', sumMeses);
+      rhGrandTotal += sumMeses;
+      lastRhItems.push({ grupo: val(pf + '-grupo'), categoria: val(pf + '-categoria'), descricao: val(pf + '-descricao'), meses: meses });
     });
-    let sumMeses = 0;
-    const meses = [];
-    for(let n=1;n<=12;n++){
-      const mv = numMoney('rh-' + u + '-mes-' + n);
-      meses.push(mv);
-      sumMeses += mv;
-      rhMonthSums[n-1] += mv;
+    const avisoEl = $('rh-' + u + '-rubaviso');
+    if(avisoEl){
+      const conflito = blocos.length > 1 && usadas.indexOf('__total') > -1;
+      avisoEl.textContent = conflito ? 'Atenção: "Total do cargo" já reúne todas as rubricas. Com mais de uma linha, escolha rubricas individuais em cada uma para não lançar valores em duplicidade.' : '';
     }
-    setMoney('rh-' + u + '-totalvig', sumMeses);
-    rhGrandTotal += sumMeses;
-    lastRhItems.push({ grupo: val('rh-' + u + '-grupo'), categoria: val('rh-' + u + '-categoria'), descricao: val('rh-' + u + '-descricao'), meses: meses });
   });
   for(let n=1;n<=12;n++) setMoney('rh-total-mes-' + n, rhMonthSums[n-1]);
   setMoney('rh-total-total', rhGrandTotal);
@@ -3336,9 +3386,9 @@ function mesesAtivos(){
 // Valor de referência do botão: total do item (Seções 8/10), ou a rubrica escolhida no cartão de RH.
 function fillReference(btn){
   if(btn.dataset.costKind === 'rubrica'){
-    const u = btn.dataset.rhUid, sel = $('rh-' + u + '-rubrica');
+    const u = btn.dataset.rhUid, sel = $(btn.dataset.rubSel || ('rh-' + u + '-rubrica'));
     const key = (sel && sel.value) ? sel.value : '__total';
-    return { value: (rhRubricas[u] || {})[key] || 0, rubrica: key, uid: u };
+    return { value: (rhRubricas[u] || {})[key] || 0, rubrica: key, uid: u, pf: btn.dataset.monthPrefix || ('rh-' + u) };
   }
   return { value: getRaw(btn.dataset.totalField), rubrica: '', uid: '' };
 }
@@ -3351,16 +3401,78 @@ function writeMonthGrid(prefix, values){
   }
 }
 // Cartão de RH ainda sem categoria: sugere a categoria AUDESP da rubrica copiada (não sobrescreve).
-function applyRubricaCategoria(u, key){
+function applyRubricaCategoria(pf, key){
   const r = RUBRICAS_RH.find(x => x.key === key);
-  const sel = $('rh-' + u + '-categoria');
+  const sel = $(pf + '-categoria');
   if(!r || !r.cat || !sel || sel.value) return;
   if(Array.from(sel.options).some(o => o.value === r.cat)) sel.value = r.cat;
 }
+// Repete o valor do Mês 1 (o que estiver nele agora) do Mês 2 até o Mês "ate" (padrão 12).
+function fillRepeat(prefix, ate, el){
+  const first = $(prefix + '-mes-1');
+  if(!first) return;
+  ate = (ate >= 2 && ate <= 12) ? ate : 12;
+  const isMoney = first.classList.contains('money-mask');
+  const v = isMoney ? numMoney(prefix + '-mes-1') : first.value;
+  for(let n=2;n<=ate;n++){
+    const inp = $(prefix + '-mes-' + n);
+    if(!inp) continue;
+    inp.value = isMoney ? numberToMoneyMask(v) : v;
+  }
+  calcAll();
+  const msg = ate === 12 ? 'Valor do Mês 1 repetido nos Meses 2 a 12.' : 'Valor do Mês 1 repetido do Mês 2 ao Mês ' + ate + '.';
+  vtFlash(el, msg);
+  announce(msg);
+}
+// "copy-cost" (custo lançado distribuído pelos meses do período), "first" (parcela única no Mês 1) e "repeat" (legado).
+// "btn" é o botão ou o select "Ação" (mesmos data-attributes: month-prefix, cost-kind, total-field, rh-uid, rub-sel).
+function fillCost(btn, mode){
+  const prefix = btn.dataset.monthPrefix;
+    const kind = btn.dataset.costKind || '';
+    if(kind === 'rubrica') calcAll();               // garante as rubricas atualizadas antes de ler
+    const ref = fillReference(btn);
+    if(kind && !(ref.value > 0)){
+      const aviso = kind === 'rubrica'
+        ? 'A rubrica selecionada está em R$ 0,00 — preencha o salário bruto/encargos antes de lançar nos meses.'
+        : 'O custo deste item ainda é R$ 0,00 — preencha quantidade e valor unitário antes de lançar nos meses.';
+      vtFlash(btn, aviso);
+      announce(aviso);
+      return;
+    }
+    const values = new Array(12).fill(0);
+    let msg = '';
+    if(mode === 'copy-cost'){
+      const n = mesesAtivos();
+      if(kind === 'total'){
+        // custo único: divide em parcelas iguais; o resíduo de centavos vai para o último mês do período
+        const cents = Math.round(ref.value * 100), base = Math.floor(cents / n);
+        for(let i=0;i<n;i++) values[i] = base / 100;
+        values[n-1] = (cents - base * (n-1)) / 100;
+        msg = n === 1
+          ? 'Custo de ' + formatBRL(ref.value) + ' lançado integralmente no Mês 1.'
+          : 'Custo de ' + formatBRL(ref.value) + ' dividido em ' + n + ' parcelas iguais (Mês 1 a ' + n + ').';
+      } else {
+        for(let i=0;i<n;i++) values[i] = ref.value;
+        msg = formatBRL(ref.value) + ' lançado em ' + (n === 1 ? 'um mês (Mês 1).' : 'cada um dos ' + n + ' meses do período.');
+      }
+    } else if(mode === 'first'){
+      values[0] = ref.value;
+      msg = 'Parcela única de ' + formatBRL(ref.value) + ' lançada no Mês 1.';
+    } else {
+      values.fill(ref.value);
+    }
+    writeMonthGrid(prefix, values);
+    if(ref.rubrica) applyRubricaCategoria(ref.pf, ref.rubrica);
+    calcAll();
+    if(msg){ vtFlash(btn, msg); announce(msg); }
+    return;
+}
 // Mensagem visível ao lado dos botões (some sozinha).
 function vtFlash(btn, text){
+  const row = btn.closest('.lanc-row');
   const box = btn.closest('.vt-actions');
-  const el = box && box.querySelector('.vt-msg');
+  let el = (row && row.querySelector('.lanc-msg')) || (box && box.querySelector('.vt-msg'));
+  if(!el){ const card = btn.closest('.item-card'); el = card && card.querySelector('.rh-fillmsg'); }
   if(!el) return;
   el.textContent = text;
   window.clearTimeout(el._t);
@@ -3402,13 +3514,24 @@ const CSV_SPECS = {
     cols:[ CSV_META,
       { k:'quantidade', f:'quantidade', t:'num', d:'Quantidade de profissionais (número inteiro; se vazio, mantém 1)' },
       { k:'vinculo', f:'vinculo', t:'sel', opts:VINCULOS_SUGESTAO, d:'Vínculo (lista abaixo)' },
-      { k:'salario_bruto', f:'bruto', t:'money', d:'Salário bruto em R$ — FGTS, 13º e férias (1/3) são calculados sozinhos a partir dele' },
+      { k:'salario_base', f:'sbase', t:'money', d:'Salário base em R$ — Salário base + adicionais = salário bruto (calculado); FGTS, 13º e férias (1/3) partem dele' },
+      { k:'salario_bruto', f:'sbase', t:'money', d:'Sinônimo de salario_base, aceito para arquivos antigos (use uma das duas colunas)' },
+      { k:'horas_extras', f:'he', t:'money', d:'Horas extras em R$' },
+      { k:'adicional_noturno', f:'adnot', t:'money', d:'Adicional noturno em R$' },
+      { k:'outros_adicionais', f:'outroadic', t:'money', d:'Outros adicionais em R$ (especifique na coluna seguinte)' },
+      { k:'outros_adicionais_especificar', f:'outroadicesp', t:'txt', d:'Especificação dos outros adicionais (ex.: insalubridade)' },
+      { k:'dsr', f:'dsr', t:'money', d:'DSR s/Horas Extras em R$' },
+      { k:'dsr_adicional_noturno', f:'dsrnot', t:'money', d:'DSR/Adicional noturno em R$' },
+      { k:'comissoes_premios', f:'comissoes', t:'money', d:'Comissões, gratificações e prêmios/bônus em R$ (quando tiverem natureza salarial)' },
       { k:'inss', f:'inss', t:'money', d:'INSS retido em R$' },
       { k:'irrf', f:'irrf', t:'money', d:'IRRF em R$' },
+      { k:'outros_descontos', f:'outrosdesc', t:'money', d:'Outros descontos em R$' },
       { k:'salario_familia', f:'salfamilia', t:'money', d:'Salário família em R$' },
       { k:'inss_patronal', f:'insspatronal', t:'money', d:'Contribuição INSS patronal em R$' },
       { k:'inss_ferias', f:'inssferias', t:'money', d:'INSS s/férias (1/3) em R$' },
       { k:'irrf_ferias', f:'irrfferias', t:'money', d:'IRRF s/férias (1/3) em R$' },
+      { k:'outros_encargos', f:'encoutros', t:'money', d:'Outros encargos e provisões em R$ (especifique na coluna seguinte)' },
+      { k:'outros_encargos_especificar', f:'encoutrosesp', t:'txt', d:'Especificação dos outros encargos' },
       { k:'indenizacoes', f:'indenizacoes', t:'money', d:'Indenizações em R$' },
       { k:'multa_fgts', f:'multa', t:'money', d:'Multa rescisória FGTS em R$' },
       { k:'aviso_previo', f:'aviso', t:'money', d:'Aviso prévio em R$' },
@@ -3421,14 +3544,15 @@ const CSV_SPECS = {
       { k:'pis', f:'pis', t:'money', d:'Contribuição do PIS em R$' },
       { k:'gratificacoes', f:'gratificacoes', t:'money', d:'Gratificações em R$' },
       { k:'outras_despesas', f:'outras', t:'money', d:'Outras despesas de RH em R$' },
+      { k:'outras_despesas_especificar', f:'outrasesp', t:'txt', d:'Especificação das outras despesas de RH' },
       { k:'categoria', f:'categoria', t:'cat', d:'Categoria de despesas (nome exato da lista abaixo; o Grupo é preenchido sozinho)' },
       { k:'descricao', f:'descricao', t:'txt', d:'Descrição (se Diversos/Outros)' },
       { k:'funcao_cargo', f:'funcao', t:'txt', d:'Função-cargo / carga horária semanal / especificação' },
-      { k:'rubrica', f:'rubrica', t:'rub', d:'Rubrica do menu de lançamento (lista abaixo)' } ].concat(CSV_MESES, [
+      { k:'rubrica', f:'rubrica', t:'rub', d:'Rubrica do menu de lançamento da 1ª tabela (lista abaixo); rubricas adicionais são incluídas no formulário' } ].concat(CSV_MESES, [
       { k:'memoria_calculo', f:'memoria', t:'txt', d:'Memória de cálculo e justificativa / critério de rateio' } ]),
     exemplos:[
-      { meta_vinculada:'Meta 1', quantidade:'1', vinculo:'CLT', salario_bruto:'3.000,00', inss:'270,00', categoria:'Salários E Ordenados (Exceto Diretoria)', funcao_cargo:'Educador social - 40h semanais', rubrica:'Salário líquido', memoria_calculo:'Piso da categoria' },
-      { meta_vinculada:'Meta 1', quantidade:'2', vinculo:'CLT', salario_bruto:'2.200,00', categoria:'Salários E Ordenados (Exceto Diretoria)', funcao_cargo:'Auxiliar administrativo - 40h semanais', rubrica:'Total do cargo (todas as rubricas)' } ] }
+      { meta_vinculada:'Meta 1', quantidade:'1', vinculo:'CLT', salario_base:'2.800,00', horas_extras:'200,00', inss:'270,00', categoria:'Salários E Ordenados (Exceto Diretoria)', funcao_cargo:'Educador social - 40h semanais', rubrica:'Salário líquido', memoria_calculo:'Piso da categoria' },
+      { meta_vinculada:'Meta 1', quantidade:'2', vinculo:'CLT', salario_base:'2.200,00', categoria:'Salários E Ordenados (Exceto Diretoria)', funcao_cargo:'Auxiliar administrativo - 40h semanais', rubrica:'Total do cargo (todas as rubricas)' } ] }
 };
 const csvNorm = s => String(s == null ? '' : s).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]+/g, ' ').trim();
 
@@ -3477,6 +3601,7 @@ function duplicarCard(type, uid){
     return;
   }
   const novo = csvNovoCard(type), nuid = novo.dataset.uid, pre = type + '-' + uid;
+  orig.querySelectorAll('.lanc-row').forEach(b => lancEnsure(type, nuid, +b.dataset.k));
   rebuildMetaSelects();                              // o select "Meta vinculada" do card novo precisa das opções antes de receber o valor
   orig.querySelectorAll('input[id], select[id], textarea[id]').forEach(el => {
     if(el.readOnly || isTransientField(el)) return;  // totais e Grupo são recalculados
@@ -3629,7 +3754,7 @@ function csvMontarPainel(type){
       <ul class="csv-steps" style="list-style:disc;">
         <li>As linhas preenchem primeiro os <b>cards vazios</b> já existentes e, acabando eles, novos cards são criados. Cards já preenchidos <b>não são alterados</b>.</li>
         <li>Valores em reais com vírgula decimal (ex.: <code>3.500,00</code>); quantidades como número. Categoria, unidade${type === 'rh' ? ', vínculo e rubrica' : ''} devem ter o nome exatamente como nas listas abaixo (maiúsculas e acentos não importam).</li>
-        <li>Os totais, o Grupo de despesas${type === 'rh' ? ', o salário líquido e os encargos (FGTS, 13º, férias 1/3)' : ''} são calculados pelo formulário. A importação não substitui o JSON salvo do plano.</li>
+        <li>Os totais, o Grupo de despesas${type === 'rh' ? ', o salário bruto (salário base + adicionais), o salário líquido e os encargos (FGTS, 13º, férias 1/3)' : ''} são calculados pelo formulário. A importação não substitui o JSON salvo do plano.</li>
       </ul>
       <div class="flex gap-2 flex-wrap items-center no-print">
         <button type="button" class="btn btn-outline btn-sm" data-csv-action="template" data-csv-type="${type}">Baixar modelo CSV (estrutura)</button>
@@ -3656,10 +3781,17 @@ document.addEventListener('change', (e) => {
   }
 });
 
+document.addEventListener('change', (e) => {
+  const s = e.target && e.target.closest ? e.target.closest('select[data-lanc-acao]') : null;
+  if(s) lancAcao(s);
+});
+
 /* ===================== Global click delegation ===================== */
 document.addEventListener('click', (e) => {
   const dupBtn = e.target.closest('[data-action="duplicate"]');
   if(dupBtn){ duplicarCard(dupBtn.dataset.dupType, dupBtn.dataset.dupUid); return; }
+  const lancAddBtn = e.target.closest('[data-action="lanc-add"]');
+  if(lancAddBtn){ lancAdd(lancAddBtn.dataset.lancType, lancAddBtn.dataset.lancUid); return; }
   const csvBtn = e.target.closest('[data-csv-action]');
   if(csvBtn){ csvAcao(csvBtn.dataset.csvType, csvBtn.dataset.csvAction); return; }
   const removeBtn = e.target.closest('[data-action="remove"]');
@@ -3693,22 +3825,7 @@ document.addEventListener('click', (e) => {
     const mode = fillBtn.dataset.fillMonths;
     const prefix = fillBtn.dataset.monthPrefix;
 
-    if(mode === 'repeat-first'){
-      // Repete o valor do Mês 1 (o que estiver nele agora) para os Meses 2 a 12.
-      const first = $(prefix + '-mes-1');
-      if(!first) return;
-      const isMoney = first.classList.contains('money-mask');
-      const v = isMoney ? numMoney(prefix + '-mes-1') : first.value;
-      for(let n=2;n<=12;n++){
-        const inp = $(prefix + '-mes-' + n);
-        if(!inp) continue;
-        inp.value = isMoney ? numberToMoneyMask(v) : v;
-      }
-      calcAll();
-      vtFlash(fillBtn, 'Valor do Mês 1 repetido nos Meses 2 a 12.');
-      announce('Valor do Mês 1 repetido para os demais meses.');
-      return;
-    }
+    if(mode === 'repeat-first'){ fillRepeat(prefix, 12, fillBtn); return; }
 
     if(mode === 'copy-monthly'){
       // Copia, mês a mês, os valores de outra grade (ex.: Custo Total) para esta.
@@ -3724,45 +3841,7 @@ document.addEventListener('click', (e) => {
       return;
     }
 
-    // "copy-cost" (copia o custo lançado para os meses do período), "first" (parcela única no Mês 1)
-    // e "repeat" (legado). Nas Seções 8, 9 e 10 o botão traz data-cost-kind: total | monthly | rubrica.
-    const kind = fillBtn.dataset.costKind || '';
-    if(kind === 'rubrica') calcAll();               // garante as rubricas atualizadas antes de ler
-    const ref = fillReference(fillBtn);
-    if(kind && !(ref.value > 0)){
-      const aviso = kind === 'rubrica'
-        ? 'A rubrica selecionada está em R$ 0,00 — preencha o salário bruto/encargos antes de lançar nos meses.'
-        : 'O custo deste item ainda é R$ 0,00 — preencha quantidade e valor unitário antes de lançar nos meses.';
-      vtFlash(fillBtn, aviso);
-      announce(aviso);
-      return;
-    }
-    const values = new Array(12).fill(0);
-    let msg = '';
-    if(mode === 'copy-cost'){
-      const n = mesesAtivos();
-      if(kind === 'total'){
-        // custo único: divide em parcelas iguais; o resíduo de centavos vai para o último mês do período
-        const cents = Math.round(ref.value * 100), base = Math.floor(cents / n);
-        for(let i=0;i<n;i++) values[i] = base / 100;
-        values[n-1] = (cents - base * (n-1)) / 100;
-        msg = n === 1
-          ? 'Custo de ' + formatBRL(ref.value) + ' lançado integralmente no Mês 1.'
-          : 'Custo de ' + formatBRL(ref.value) + ' dividido em ' + n + ' parcelas iguais (Mês 1 a ' + n + ').';
-      } else {
-        for(let i=0;i<n;i++) values[i] = ref.value;
-        msg = formatBRL(ref.value) + ' lançado em ' + (n === 1 ? 'um mês (Mês 1).' : 'cada um dos ' + n + ' meses do período.');
-      }
-    } else if(mode === 'first'){
-      values[0] = ref.value;
-      msg = 'Parcela única de ' + formatBRL(ref.value) + ' lançada no Mês 1.';
-    } else {
-      values.fill(ref.value);
-    }
-    writeMonthGrid(prefix, values);
-    if(ref.rubrica) applyRubricaCategoria(ref.uid, ref.rubrica);
-    calcAll();
-    if(msg){ vtFlash(fillBtn, msg); announce(msg); }
+    fillCost(fillBtn, mode);
     return;
   }
 });
@@ -3883,7 +3962,7 @@ function slugify(s){
    também a referência "Meta vinculada" (que aponta para um uid de Meta) através desse mesmo mapa. */
 function isTransientField(el){
   // <input type="file"> não aceita valor programático e a barra de rascunho/modelos não é dado do plano
-  return el.type === 'file' || !!el.closest('#data-toolbar');
+  return el.type === 'file' || el.hasAttribute('data-lanc-acao') || !!el.closest('#data-toolbar');
 }
 function setFieldValue(id, value){
   const el = $(id);
@@ -3946,6 +4025,14 @@ function importPlanFromData(campos){
       const newUid = map[srcUid];
       if(!newUid) return;
       const fields = groups[prefix][srcUid];
+      if(prefix === 'impl' || prefix === 'oper' || prefix === 'rh'){
+        Object.keys(fields).forEach(f => { const mk = f.match(/^r(\d+)-/); if(mk) lancEnsure(prefix, newUid, +mk[1]); });
+      }
+      if(prefix === 'rh'){
+        // Plano salvo antes da "composição do salário bruto": o valor do bruto antigo passa a ser o salário base
+        const temComposicao = ['sbase', 'he', 'adnot', 'outroadic', 'dsr', 'comissoes'].some(k => k in fields);
+        if(!temComposicao && 'bruto' in fields && moneyMaskToNumber(String(fields.bruto)) > 0) fields.sbase = fields.bruto;
+      }
       Object.keys(fields).forEach(field => {
         let value = fields[field];
         if(field === 'meta' && uidMaps.meta && uidMaps.meta[value] !== undefined) value = uidMaps.meta[value];
